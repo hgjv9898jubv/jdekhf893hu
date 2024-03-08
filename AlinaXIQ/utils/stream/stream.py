@@ -1,13 +1,3 @@
-# Copyright (C) 2024 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
-
-""""
-TheTeamAlexa is a project of Telegram bots with variety of purposes.
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want or you can collabe if you have new ideas.
-"""
 
 
 import os
@@ -17,23 +7,23 @@ from typing import Union
 from pyrogram.types import InlineKeyboardMarkup
 
 import config
-from AlexaMusic import Carbon, YouTube, app
-from AlexaMusic.core.call import Alexa
-from AlexaMusic.misc import db
-from AlexaMusic.utils.database import (
+from AlinaXIQ import Carbon, YouTube, app
+from AlinaXIQ.core.call import Alina
+from AlinaXIQ.misc import db
+from AlinaXIQ.utils.database import (
     add_active_chat,
     add_active_video_chat,
     is_active_chat,
     is_video_allowed,
     music_on,
 )
-from AlexaMusic.utils.exceptions import AssistantErr
-from AlexaMusic.utils.inline.play import stream_markup, queue_markup, telegram_markup
-from AlexaMusic.utils.inline.playlist import close_markup
-from AlexaMusic.utils.pastebin import Alexabin
-from AlexaMusic.utils.stream.queue import put_queue, put_queue_index
-from AlexaMusic.utils.thumbnails import gen_thumb, gen_qthumb
-from AlexaMusic.utils.theme import check_theme
+from AlinaXIQ.utils.exceptions import AssistantErr
+from AlinaXIQ.utils.inline.play import stream_markup, queue_markup, telegram_markup
+from AlinaXIQ.utils.inline.playlist import close_markup
+from AlinaXIQ.utils.pastebin import Alinabin
+from AlinaXIQ.utils.stream.queue import put_queue, put_queue_index
+from AlinaXIQ.utils.thumbnails import gen_thumb, gen_qthumb
+from AlinaXIQ.utils.theme import check_theme
 
 
 async def stream(
@@ -42,7 +32,7 @@ async def stream(
     user_id,
     result,
     chat_id,
-    user_name,
+    user_mentoin,
     original_chat_id,
     video: Union[bool, str] = None,
     streamtype: Union[bool, str] = None,
@@ -55,7 +45,7 @@ async def stream(
         if not await is_video_allowed(chat_id):
             raise AssistantErr(_["play_7"])
     if forceplay:
-        await Alexa.force_stop_stream(chat_id)
+        await Alina.force_stop_stream(chat_id)
     if streamtype == "playlist":
         msg = f"{_['playlist_16']}\n\n"
         count = 0
@@ -83,7 +73,7 @@ async def stream(
                     f"vid_{vidid}",
                     title,
                     duration_min,
-                    user_name,
+                    user_mentoin,
                     vidid,
                     user_id,
                     "video" if video else "audio",
@@ -102,7 +92,7 @@ async def stream(
                     )
                 except:
                     raise AssistantErr(_["play_16"])
-                await Alexa.join_call(
+                await Alina.join_call(
                     chat_id, original_chat_id, file_path, video=status, image=thumbnail
                 )
                 await put_queue(
@@ -111,7 +101,7 @@ async def stream(
                     file_path if direct else f"vid_{vidid}",
                     title,
                     duration_min,
-                    user_name,
+                    user_mentoin,
                     vidid,
                     user_id,
                     "video" if video else "audio",
@@ -127,7 +117,7 @@ async def stream(
                         title[:27],
                         f"https://t.me/{app.username}?start=info_{vidid}",
                         duration_min,
-                        user_name,
+                        user_mentoin,
                     ),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
@@ -136,7 +126,7 @@ async def stream(
         if count == 0:
             return
         else:
-            link = await Alexabin(msg)
+            link = await Alinabin(msg)
             lines = msg.count("\n")
             if lines >= 17:
                 car = os.linesep.join(msg.split(os.linesep)[:17])
@@ -170,7 +160,7 @@ async def stream(
                 file_path if direct else f"vid_{vidid}",
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 vidid,
                 user_id,
                 "video" if video else "audio",
@@ -183,14 +173,14 @@ async def stream(
                 original_chat_id,
                 photo=qimg,
                 caption=_["queue_4"].format(
-                    position, title[:27], duration_min, user_name
+                    position, title[:27], duration_min, user_mentoin
                 ),
                 reply_markup=InlineKeyboardMarkup(button),
             )
         else:
             if not forceplay:
                 db[chat_id] = []
-            await Alexa.join_call(
+            await Alina.join_call(
                 chat_id, original_chat_id, file_path, video=status, image=thumbnail
             )
             await put_queue(
@@ -199,7 +189,7 @@ async def stream(
                 file_path if direct else f"vid_{vidid}",
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 vidid,
                 user_id,
                 "video" if video else "audio",
@@ -216,7 +206,7 @@ async def stream(
                         title[:27],
                         f"https://t.me/{app.username}?start=info_{vidid}",
                         duration_min,
-                        user_name,
+                        user_mentoin,
                     ),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
@@ -235,7 +225,7 @@ async def stream(
                 file_path,
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 streamtype,
                 user_id,
                 "audio",
@@ -243,19 +233,19 @@ async def stream(
             position = len(db.get(chat_id)) - 1
             await app.send_message(
                 original_chat_id,
-                _["queue_4"].format(position, title[:30], duration_min, user_name),
+                _["queue_4"].format(position, title[:30], duration_min, user_mentoin),
             )
         else:
             if not forceplay:
                 db[chat_id] = []
-            await Alexa.join_call(chat_id, original_chat_id, file_path, video=None)
+            await Alina.join_call(chat_id, original_chat_id, file_path, video=None)
             await put_queue(
                 chat_id,
                 original_chat_id,
                 file_path,
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 streamtype,
                 user_id,
                 "audio",
@@ -265,7 +255,7 @@ async def stream(
             run = await app.send_photo(
                 original_chat_id,
                 photo=config.SOUNCLOUD_IMG_URL,
-                caption=_["stream_3"].format(title, duration_min, user_name),
+                caption=_["stream_3"].format(title, duration_min, user_mentoin),
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
@@ -283,7 +273,7 @@ async def stream(
                 file_path,
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 streamtype,
                 user_id,
                 "video" if video else "audio",
@@ -291,19 +281,19 @@ async def stream(
             position = len(db.get(chat_id)) - 1
             await app.send_message(
                 original_chat_id,
-                _["queue_4"].format(position, title[:30], duration_min, user_name),
+                _["queue_4"].format(position, title[:30], duration_min, user_mentoin),
             )
         else:
             if not forceplay:
                 db[chat_id] = []
-            await Alexa.join_call(chat_id, original_chat_id, file_path, video=status)
+            await Alina.join_call(chat_id, original_chat_id, file_path, video=status)
             await put_queue(
                 chat_id,
                 original_chat_id,
                 file_path,
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 streamtype,
                 user_id,
                 "video" if video else "audio",
@@ -315,7 +305,7 @@ async def stream(
             run = await app.send_photo(
                 original_chat_id,
                 photo=config.TELEGRAM_VIDEO_URL if video else config.TELEGRAM_AUDIO_URL,
-                caption=_["stream_4"].format(title, link, duration_min, user_name),
+                caption=_["stream_4"].format(title, link, duration_min, user_mentoin),
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
@@ -334,7 +324,7 @@ async def stream(
                 f"live_{vidid}",
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 vidid,
                 user_id,
                 "video" if video else "audio",
@@ -342,7 +332,7 @@ async def stream(
             position = len(db.get(chat_id)) - 1
             await app.send_message(
                 original_chat_id,
-                _["queue_4"].format(position, title[:30], duration_min, user_name),
+                _["queue_4"].format(position, title[:30], duration_min, user_mentoin),
             )
         else:
             if not forceplay:
@@ -350,7 +340,7 @@ async def stream(
             n, file_path = await YouTube.video(link)
             if n == 0:
                 raise AssistantErr(_["str_3"])
-            await Alexa.join_call(
+            await Alina.join_call(
                 chat_id,
                 original_chat_id,
                 file_path,
@@ -363,7 +353,7 @@ async def stream(
                 f"live_{vidid}",
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 vidid,
                 user_id,
                 "video" if video else "audio",
@@ -379,7 +369,7 @@ async def stream(
                     title[:27],
                     f"https://t.me/{app.username}?start=info_{vidid}",
                     duration_min,
-                    user_name,
+                    user_mentoin,
                 ),
                 reply_markup=InlineKeyboardMarkup(button),
             )
@@ -396,18 +386,18 @@ async def stream(
                 "index_url",
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 link,
                 "video" if video else "audio",
             )
             position = len(db.get(chat_id)) - 1
             await mystic.edit_text(
-                _["queue_4"].format(position, title[:30], duration_min, user_name)
+                _["queue_4"].format(position, title[:30], duration_min, user_mentoin)
             )
         else:
             if not forceplay:
                 db[chat_id] = []
-            await Alexa.join_call(
+            await Alina.join_call(
                 chat_id,
                 original_chat_id,
                 link,
@@ -419,7 +409,7 @@ async def stream(
                 "index_url",
                 title,
                 duration_min,
-                user_name,
+                user_mentoin,
                 link,
                 "video" if video else "audio",
                 forceplay=forceplay,
@@ -428,7 +418,7 @@ async def stream(
             run = await app.send_photo(
                 original_chat_id,
                 photo=config.STREAM_IMG_URL,
-                caption=_["stream_2"].format(user_name),
+                caption=_["stream_2"].format(user_mentoin),
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
