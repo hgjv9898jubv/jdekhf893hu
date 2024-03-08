@@ -15,10 +15,10 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 
 from config import BANNED_USERS
 from strings import get_command
-from AlexaMusic import app
-from AlexaMusic.utils.database import get_playmode, get_playtype, is_nonadmin_chat
-from AlexaMusic.utils.decorators import language
-from AlexaMusic.utils.inline.settings import playmode_users_markup
+from AlinaXIQ import app
+from AlinaXIQ.utils.database import get_playmode, get_playtype, is_nonadmin_chat
+from AlinaXIQ.utils.decorators import language
+from AlinaXIQ.utils.inline.settings import playmode_users_markup
 
 ### Commands
 PLAYMODE_COMMAND = get_command("PLAYMODE_COMMAND")
