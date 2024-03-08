@@ -13,7 +13,7 @@ from typing import Union
 
 from config import autoclean, chatstats, userstats
 from config.config import time_to_seconds
-from AlexaMusic.misc import db
+from AlinaXIQ.misc import db
 
 
 async def put_queue(
