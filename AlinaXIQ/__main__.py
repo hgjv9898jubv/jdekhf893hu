@@ -24,7 +24,7 @@ async def init():
         and not config.STRING4
         and not config.STRING5
     ):
-        LOGGER("AlexaMusic").error("Add Pyrogram string session and then try...")
+        LOGGER("AlinaXIQ").error("Add Pyrogram string session and then try...")
     try:
         users = await get_gbanned()
         for user_id in users:
@@ -37,23 +37,23 @@ async def init():
     await app.start()
     for all_module in ALL_MODULES:
         importlib.import_module("AlexaMusic.plugins" + all_module)
-    LOGGER("AlexaMusic.plugins").info("Necessary Modules Imported Successfully.")
+    LOGGER("AlinaXIQ.plugins").info("Necessary Modules Imported Successfully.")
     await userbot.start()
-    await Alexa.start()
+    await Alina.start()
     try:
-        await Alexa.stream_call("https://telegra.ph/file/b60b80ccb06f7a48f68b5.mp4")
+        await Alina.stream_call("https://telegra.ph/file/b60b80ccb06f7a48f68b5.mp4")
     except NoActiveGroupCall:
-        LOGGER("AlexaMusic").error(
+        LOGGER("AlinaXIQ").error(
             "[ERROR] - \n\nTurn on group voice chat and don't put it off otherwise I'll stop working thanks."
         )
         sys.exit()
     except:
         pass
-    await Alexa.decorators()
-    LOGGER("AlexaMusic").info("Music Bot Started Successfully")
+    await Alina.decorators()
+    LOGGER("AlinaXIQ").info("Music Bot Started Successfully")
     await idle()
 
 
 if __name__ == "__main__":
     loop.run_until_complete(init())
-    LOGGER("AlexaMusic").info("Stopping Music Bot")
+    LOGGER("AlinaXIQ").info("Stopping Music Bot")
