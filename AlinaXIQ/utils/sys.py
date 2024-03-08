@@ -14,7 +14,7 @@ import time
 
 import psutil
 
-from AlexaMusic.misc import _boot_
+from AlinaXIQ.misc import _boot_
 
 from .formatters import get_readable_time
 
