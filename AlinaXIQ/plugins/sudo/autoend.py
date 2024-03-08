@@ -14,10 +14,10 @@ from pyrogram import filters
 
 import config
 from strings import get_command
-from AlexaMusic import app
-from AlexaMusic.misc import SUDOERS
-from AlexaMusic.utils.database import autoend_off, autoend_on
-from AlexaMusic.utils.decorators.language import language
+from AlinaXIQ import app
+from AlinaXIQ.misc import SUDOERS
+from AlinaXIQ.utils.database import autoend_off, autoend_on
+from AlinaXIQ.utils.decorators.language import language
 
 # Commands
 AUTOEND_COMMAND = get_command("AUTOEND_COMMAND")
