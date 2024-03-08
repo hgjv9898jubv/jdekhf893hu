@@ -17,9 +17,9 @@ from pyrogram.types import Message
 
 from config import BANNED_USERS
 from strings import get_command
-from AlexaMusic import app
-from AlexaMusic.misc import db
-from AlexaMusic.utils.decorators import AdminRightsCheck
+from AlinaXIQ import app
+from AlinaXIQ.misc import db
+from AlinaXIQ.utils.decorators import AdminRightsCheck
 
 # Commands
 SHUFFLE_COMMAND = get_command("SHUFFLE_COMMAND")
