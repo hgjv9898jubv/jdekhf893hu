@@ -1,44 +1,44 @@
 # Bot Commands
-PING_COMMAND : ["ping"]
-START_COMMAND : ["start"]
-HELP_COMMAND : ["help"]
-SETTINGS_COMMAND : ["settings", "setting"]
-RELOAD_COMMAND : ["admincache", "reload"]
-GSTATS_COMMAND : ["gstats"]
-STATS_COMMAND : ["stats"]
-LANGUAGE_COMMAND : ["lang", "language", "langs"]
+PING_COMMAND : ["ping", "پینگ"]
+START_COMMAND : ["start", "/start", "دەستپێکردن"]
+HELP_COMMAND : ["help", "فەرمانەکان"]
+SETTINGS_COMMAND : ["settings", "/settings", "ڕێکبەندەکان"]
+RELOAD_COMMAND : ["admincache", "reload", "/reload", "ڕ"]
+GSTATS_COMMAND : ["gstats", "ئاماری گشتی"]
+STATS_COMMAND : ["stats", "ئامار"]
+LANGUAGE_COMMAND : ["lang", "language", "زمان"]
 
 # Play Commands
-PLAY_COMMAND : ["play", "fuck", "vplay", "cplay", "cvplay", "playforce", "vplayforce", "cplayforce", "cvplayforce"]
-PLAYMODE_COMMAND : ["playmode"]
+PLAY_COMMAND : ["play", "vplay", "cplay", "cvplay", "playforce", "vplayforce", "cplayforce", "cvplayforce", "/play", "/vplay", "cplay", "g", "گ", "پلەی", "video", "پ کەناڵ","gorani","ڤیدیو","سوڕەتی","سورەتی","سورەت","سوڕەت"]
+PLAYMODE_COMMAND : ["playmode", "دۆخی پەخش", "/playmode"]
 CHANNELPLAY_COMMAND : ["channelplay"]
-STREAM_COMMAND : ["stream", "cstream", "streamforce"]
+STREAM_COMMAND : ["stream", "cstream", "streamforce", "لایڤ"]
 
-#Playlists Command
-PLAYLIST_COMMAND : ["playlist"]
-DELETEPLAYLIST_COMMAND : ["deleteplaylist"]
+#Pl#Playlists Command
+PLAYLIST_COMMAND : ["playlist", "لیستی پەخشکردن"]
+DELETEPLAYLIST_COMMAND : ["deleteplaylist", "سڕینەوەی لیست"]
 
 
 # Tools
-QUEUE_COMMAND : ["queue","cqueue", "player", "cplayer", "playing", "cplaying"]
-SONG_COMMAND : ["song", "video", "vsong"]
-LYRICS_COMMAND : ["lyrics"]
+QUEUE_COMMAND : ["queue","cqueue", "player", "cplayer", "playing", "cplaying","ڕیزکراو"]
+SONG_COMMAND : ["song", "داگرتن", "یوتوب"]
+LYRICS_COMMAND : ["lyrics", "وشە", "/lyrics"]
 
 
 # Admin Commands
-AUTH_COMMAND : ["auth"]
-UNAUTH_COMMAND : ["unauth"]
-AUTHUSERS_COMMAND : ["authusers"]
-PAUSE_COMMAND : ["pause", "cpause"]
-RESUME_COMMAND : ["resume", "cresume"]
-MUTE_COMMAND : ["mute", "cmute"]
-UNMUTE_COMMAND : ["unmute", "cunmute"]
-STOP_COMMAND : ["stop", "end", "cstop", "cend"]
-SKIP_COMMAND : ["skip", "cskip"]
-SHUFFLE_COMMAND : ["shuffle", "cshuffle"]
+AUTH_COMMAND : ["auth", "ئەدمین"]
+UNAUTH_COMMAND : ["unauth", "لادانی ڕێپێدان", "unadmin"]
+AUTHUSERS_COMMAND : ["authusers", "ڕێگەپێدراوەکان", "ئەدمینەکان"]
+PAUSE_COMMAND : ["pause", "cpause", "وسبە", "/pause", "/cpause", "وەستانی کاتی"]
+RESUME_COMMAND : ["resume", "cresume", "دەستپێکردنەوە", "/resume", "/cresume", "د"]
+MUTE_COMMAND : ["mute", "cmute", "دانیشە", "/mute", "/cmute"]
+UNMUTE_COMMAND : ["unmute", "cunmute", "/unmute", "/cunmute"]
+STOP_COMMAND : ["stop", "end", "cstop", "cend", "وەستان", "/end", "/stop", "ڕاگرتن", "/cend", "/cstop"]
+SKIP_COMMAND : ["skip", "cskip", "تێپەڕاندن" ,"سکیپ", "/skip", "/cskip", "دواتر"]
+SHUFFLE_COMMAND : ["shuffle", "cshuffle", "/shuffle", "تێکەڵکردن"]
 LOOP_COMMAND : ["loop", "cloop"]
 SEEK_COMMAND : ["seek", "cseek", "seekback", "cseekback"]
-RESTART_COMMAND : ["reboot"]
+RESTART_COMMAND : ["restart", "/restart", "ڕێستارت"]
 
 # Sudo Users Commaands
 
@@ -56,26 +56,25 @@ WHITELISTCHAT_COMMAND : ["whitelistchat", "unblchat"]
 BLACKLISTEDCHAT_COMMAND : ["blacklistedchat"]
 
 # Video Calls Command
-VIDEOLIMIT_COMMAND : ["set_video_limit"]
-VIDEOMODE_COMMAND : ["videomode"]
-
+VIDEOLIMIT_COMMAND : ["set_video_limit", "سنووری ڤیدیۆ"]
+VIDEOMODE_COMMAND : ["videomode", "دۆخی ڤیدیۆ"]
 #Mantenance
-MAINTENANCE_COMMAND : ["maintenance"]
+MAINTENANCE_COMMAND : ["maintenance", "پاراستن"]
 LOGGER_COMMAND : ["logger"]
 
 #Heroku
-GETLOG_COMMAND : ["get_log", "logs", "getlog", "log"]
-GETVAR_COMMAND : ["get_var", "getvar", "showvar"]
-DELVAR_COMMAND : ["del_var", "delvar"]
-SETVAR_COMMAND : ["set_var", "setvar", "addvar"]
-USAGE_COMMAND : ["usage"]
-VARS_COMMAND : ["vars", "config"]
-
+LOGGER_COMMAND : ["logger"]
+GETLOG_COMMAND : ["get_log", "لۆگ"]
+GETVAR_COMMAND : ["get_var", "ڤارەکان"]
+DELVAR_COMMAND : ["del_var", "سڕینەوەی ڤار"]
+SETVAR_COMMAND : ["set_var", "زیادکردنی ڤار"]
+USAGE_COMMAND : ["usage", "بەکارهێنان"]
+VARS_COMMAND : ["vars", "config", "ڤار", "کۆنفیگ"]
 
 #Basic Bot Commands
-UPDATE_COMMAND : ["update"]
-REBOOT_COMMAND : ["restart"]
-AUTOEND_COMMAND : ["autoend"]
+UPDATE_COMMAND : ["update", "نوێکردنەوە"]
+REBOOT_COMMAND : ["reboot", "ڕیبۆت"]
+AUTOEND_COMMAND : ["autoend", "وەستانی خودکار"]
 
 #Private Bot Mode
 AUTHORIZE_COMMAND : ["authorize"]
@@ -91,10 +90,21 @@ BLOCKED_COMMAND : ["blockedusers"]
 SPEEDTEST_COMMAND : ["speedtest"]
 
 #Voice chat commands
-ACTIVEVC_COMMAND : ["activevoice", "activevc"]
-ACTIVEVIDEO_COMMAND : ["activevideo", "activev"]
+ACTIVEVC_COMMAND : ["activevoice"]
+ACTIVEVIDEO_COMMAND : ["activevideo"]
+
+#Block Users Command
+BLOCK_COMMAND : ["block", "بلۆک", "قەدەغەکردن"]
+UNBLOCK_COMMAND : ["unblock","لادانی بلۆک"]
+BLOCKED_COMMAND : ["blockedusers", "بلۆککراوەکان"]
+#sPEEDTEST
+SPEEDTEST_COMMAND : ["speedtest", "خێرای", "spt"]
+
+#Voice chat commands
+ACTIVEVC_COMMAND : ["activevoice", "چالاکی دەنگی"]
+ACTIVEVIDEO_COMMAND : ["activevideo", "چالاکی ڤیدیۆ"]
 
 #Gban Commands
-GBAN_COMMAND : ["gban"]
-UNGBAN_COMMAND : ["ungban"]
-GBANNED_COMMAND : ["gbannedusers"]
+GBAN_COMMAND : ["gban", "دەرکردنی گشتی"]
+UNGBAN_COMMAND : ["ungban", "لادانی گشتی"]
+GBANNED_COMMAND : ["gbannedusers", "باندکراوەکان"]
