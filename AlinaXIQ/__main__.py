@@ -1,14 +1,3 @@
-# Copyright (C) 2024 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
-
-""""
-TheTeamAlexa is a project of Telegram bots with variety of purposes.
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want or you can collabe if you have new ideas.
-"""
-
 
 import asyncio
 import importlib
@@ -19,10 +8,10 @@ from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
 from config import BANNED_USERS
-from AlexaMusic import LOGGER, app, userbot
-from AlexaMusic.core.call import Alexa
-from AlexaMusic.plugins import ALL_MODULES
-from AlexaMusic.utils.database import get_banned_users, get_gbanned
+from AlinaXIQ import LOGGER, app, userbot
+from AlinaXIQ.core.call import Alina
+from AlinaXIQ.plugins import ALL_MODULES
+from AlinaXIQ.utils.database import get_banned_users, get_gbanned
 
 loop = asyncio.get_event_loop_policy().get_event_loop()
 
