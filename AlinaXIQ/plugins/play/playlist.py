@@ -156,7 +156,7 @@ async def play_playlist(client, CallbackQuery, _):
             user_id,
             result,
             chat_id,
-            user_name,
+            user_mentoin,
             CallbackQuery.message.chat.id,
             video,
             streamtype="playlist",
