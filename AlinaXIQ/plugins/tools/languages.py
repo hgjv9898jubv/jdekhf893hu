@@ -1,24 +1,12 @@
-# Copyright (C) 2024 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
-
-""""
-TheTeamAlexa is a project of Telegram bots with variety of purposes.
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want or you can collabe if you have new ideas.
-"""
-
-
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, Message
 
 from config import BANNED_USERS
 from strings import get_command, get_string
-from AlexaMusic import app
-from AlexaMusic.utils.database import get_lang, set_lang
-from AlexaMusic.utils.decorators import ActualAdminCB, language, languageCB
+from AlinaXIQ import app
+from AlinaXIQ.utils.database import get_lang, set_lang
+from AlinaXIQ.utils.decorators import ActualAdminCB, language, languageCB
 
 # Languages Available
 
