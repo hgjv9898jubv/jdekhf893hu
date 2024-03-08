@@ -18,10 +18,10 @@ from pyrogram.types import Message
 
 from config import BANNED_USERS
 from strings import get_command
-from AlexaMusic import app
-from AlexaMusic.misc import SUDOERS
-from AlexaMusic.utils import get_readable_time
-from AlexaMusic.utils.database import (
+from AlinaXIQ import app
+from AlinaXIQ.misc import SUDOERS
+from AlinaXIQ.utils import get_readable_time
+from AlinaXIQ.utils.database import (
     add_banned_user,
     get_banned_count,
     get_banned_users,
@@ -29,7 +29,7 @@ from AlexaMusic.utils.database import (
     is_banned_user,
     remove_banned_user,
 )
-from AlexaMusic.utils.decorators.language import language
+from AlinaXIQ.utils.decorators.language import language
 
 # Command
 GBAN_COMMAND = get_command("GBAN_COMMAND")
