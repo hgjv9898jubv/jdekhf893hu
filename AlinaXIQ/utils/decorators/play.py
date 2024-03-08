@@ -20,11 +20,11 @@ from pyrogram.errors import (
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE, adminlist
-from AlexaMusic.misc import db
+from AlinaXIQ.misc import db
 from strings import get_string
-from AlexaMusic import YouTube, app
-from AlexaMusic.misc import SUDOERS
-from AlexaMusic.utils.database import (
+from AlinaXIQ import YouTube, app
+from AlinaXIQ.misc import SUDOERS
+from AlinaXIQ.utils.database import (
     get_cmode,
     get_lang,
     get_playmode,
@@ -34,8 +34,8 @@ from AlexaMusic.utils.database import (
     is_commanddelete_on,
     is_served_private_chat,
 )
-from AlexaMusic.utils.database.memorydatabase import is_maintenance
-from AlexaMusic.utils.inline.playlist import botplaylist_markup
+from AlinaXIQ.utils.database.memorydatabase import is_maintenance
+from AlinaXIQ.utils.inline.playlist import botplaylist_markup
 
 links = {}
 
@@ -81,18 +81,6 @@ def PlayWrapper(command):
                     caption=_["playlist_1"],
                     reply_markup=InlineKeyboardMarkup(buttons),
                 )
-        if message.sender_chat:
-            upl = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="How to Fix this? ",
-                            callback_data="AnonymousAdmin",
-                        ),
-                    ]
-                ]
-            )
-            return await message.reply_text(_["general_4"], reply_markup=upl)
         if message.command[0][0] == "c":
             chat_id = await get_cmode(message.chat.id)
             if chat_id is None:
@@ -114,7 +102,7 @@ def PlayWrapper(command):
                     return await message.reply_text(_["admin_18"])
                 if message.from_user.id not in admins:
                     return await message.reply_text(_["play_4"])
-        if message.command[0][0] == "v":
+        if message.command[0][0] == "v" or message.command[0][0] == "ڤ":
             video = True
         else:
             if message.text and "-v" in message.text:
