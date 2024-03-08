@@ -20,4 +20,4 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from AlinaXIQ.utils.database import get_served_users, get_served_chats
 
 
-OWNER_ID = 6174058850
+OWNER_ID = 833360381
