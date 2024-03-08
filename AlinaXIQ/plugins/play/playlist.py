@@ -16,21 +16,21 @@ from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
-from AlexaMusic import Carbon, YouTube, app
-from AlexaMusic.utils.database import (
+from AlinaXIQ import Carbon, YouTube, app
+from AlinaXIQ.utils.database import (
     delete_playlist,
     get_playlist,
     get_playlist_names,
     save_playlist,
 )
-from AlexaMusic.utils.decorators.language import language, languageCB
-from AlexaMusic.utils.inline.playlist import (
+from AlinaXIQ.utils.decorators.language import language, languageCB
+from AlinaXIQ.utils.inline.playlist import (
     botplaylist_markup,
     get_playlist_markup,
     warning_markup,
 )
-from AlexaMusic.utils.pastebin import Alexabin
-from AlexaMusic.utils.stream.stream import stream
+from AlinaXIQ.utils.pastebin import Alinabin
+from AlinaXIQ.utils.stream.stream import stream
 from config import BANNED_USERS, SERVER_PLAYLIST_LIMIT
 from strings import get_command
 
@@ -57,7 +57,7 @@ async def check_playlist(client, message: Message, _):
         count += 1
         msg += f"\n\n{count}- {title[:70]}\n"
         msg += _["playlist_5"].format(duration)
-    link = await Alexabin(msg)
+    link = await Alinabin(msg)
     lines = msg.count("\n")
     if lines >= 17:
         car = os.linesep.join(msg.split(os.linesep)[:17])
