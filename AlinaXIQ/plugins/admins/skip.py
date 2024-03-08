@@ -16,15 +16,15 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 import config
 from config import BANNED_USERS
 from strings import get_command
-from AlexaMusic import YouTube, app
-from AlexaMusic.core.call import Alexa
-from AlexaMusic.misc import db
-from AlexaMusic.utils.database import get_loop
-from AlexaMusic.utils.decorators import AdminRightsCheck
-from AlexaMusic.utils.inline.play import stream_markup, telegram_markup
-from AlexaMusic.utils.stream.autoclear import auto_clean
-from AlexaMusic.utils.thumbnails import gen_thumb
-from AlexaMusic.utils.theme import check_theme
+from AlinaXIQ import YouTube, app
+from AlinaXIQ.core.call import Alina
+from AlinaXIQ.misc import db
+from AlinaXIQ.utils.database import get_loop
+from AlinaXIQ.utils.decorators import AdminRightsCheck
+from AlinaXIQ.utils.inline.play import stream_markup, telegram_markup
+from AlinaXIQ.utils.stream.autoclear import auto_clean
+from AlinaXIQ.utils.thumbnails import gen_thumb
+from AlinaXIQ.utils.theme import check_theme
 
 # Commands
 SKIP_COMMAND = get_command("SKIP_COMMAND")
@@ -63,7 +63,7 @@ async def skip(cli, message: Message, _, chat_id):
                                         ),
                                         disable_web_page_preview=True,
                                     )
-                                    await Alexa.stop_stream(chat_id)
+                                    await Alina.stop_stream(chat_id)
                                 except:
                                     return
                                 break
@@ -89,7 +89,7 @@ async def skip(cli, message: Message, _, chat_id):
                     disable_web_page_preview=True,
                 )
                 try:
-                    return await Alexa.stop_stream(chat_id)
+                    return await Alina.stop_stream(chat_id)
                 except:
                     return
         except:
@@ -98,7 +98,7 @@ async def skip(cli, message: Message, _, chat_id):
                     _["admin_10"].format(message.from_user.first_name),
                     disable_web_page_preview=True,
                 )
-                return await Alexa.stop_stream(chat_id)
+                return await Alina.stop_stream(chat_id)
             except:
                 return
     queued = check[0]["file"]
@@ -115,7 +115,7 @@ async def skip(cli, message: Message, _, chat_id):
         if n == 0:
             return await message.reply_text(_["admin_11"].format(title))
         try:
-            await Alexa.skip_stream(chat_id, link, video=status)
+            await Alina.skip_stream(chat_id, link, video=status)
         except Exception:
             return await message.reply_text(_["call_9"])
         theme = await check_theme(chat_id)
@@ -143,7 +143,7 @@ async def skip(cli, message: Message, _, chat_id):
         except:
             return await mystic.edit_text(_["call_9"])
         try:
-            await Alexa.skip_stream(chat_id, file_path, video=status)
+            await Alina.skip_stream(chat_id, file_path, video=status)
         except Exception:
             return await mystic.edit_text(_["call_9"])
         theme = await check_theme(chat_id)
@@ -164,7 +164,7 @@ async def skip(cli, message: Message, _, chat_id):
         await mystic.delete()
     elif "index_" in queued:
         try:
-            await Alexa.skip_stream(chat_id, videoid, video=status)
+            await Alina.skip_stream(chat_id, videoid, video=status)
         except Exception:
             return await message.reply_text(_["call_9"])
         button = telegram_markup(_, chat_id)
@@ -177,7 +177,7 @@ async def skip(cli, message: Message, _, chat_id):
         db[chat_id][0]["markup"] = "tg"
     else:
         try:
-            await Alexa.skip_stream(chat_id, queued, video=status)
+            await Alina.skip_stream(chat_id, queued, video=status)
         except Exception:
             return await message.reply_text(_["call_9"])
         if videoid == "telegram":
