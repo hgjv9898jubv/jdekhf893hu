@@ -18,8 +18,8 @@ from pyrogram.types import (
 from youtubesearchpython.__future__ import VideosSearch
 
 from config import BANNED_USERS, MUSIC_BOT_NAME
-from AlexaMusic import app
-from AlexaMusic.utils.inlinequery import answer
+from AlinaXIQ import app
+from AlinaXIQ.utils.inlinequery import answer
 
 
 @app.on_inline_query(~BANNED_USERS)
