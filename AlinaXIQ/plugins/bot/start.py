@@ -21,11 +21,11 @@ import config
 from config import BANNED_USERS
 from config.config import OWNER_ID
 from strings import get_command, get_string
-from AlexaMusic import Telegram, YouTube, app
-from AlexaMusic.misc import SUDOERS
-from AlexaMusic.plugins.play.playlist import del_plist_msg
-from AlexaMusic.plugins.sudo.sudoers import sudoers_list
-from AlexaMusic.utils.database import (
+from AlinaXIQ import Telegram, YouTube, app
+from AlinaXIQ.misc import SUDOERS
+from AlinaXIQ.plugins.play.playlist import del_plist_msg
+from AlinaXIQ.plugins.sudo.sudoers import sudoers_list
+from AlinaXIQ.utils.database import (
     add_served_chat,
     is_served_user,
     add_served_user,
@@ -36,9 +36,9 @@ from AlexaMusic.utils.database import (
     is_on_off,
     is_served_private_chat,
 )
-from AlexaMusic.utils.decorators.language import LanguageStart
-from AlexaMusic.utils.inline import help_pannel, private_panel, start_pannel
-from AlexaMusic.utils.command import commandpro
+from v.utils.decorators.language import LanguageStart
+from AlinaXIQ.utils.inline import help_pannel, private_panel, start_pannel
+from AlinaXIQ.utils.command import commandpro
 
 loop = asyncio.get_running_loop()
 
