@@ -208,36 +208,6 @@ async def play_commnd(
                     details["title"],
                     details["duration_min"],
                 )
-
-            elif "youtube.com/@" in url:
-            # Check if the URL is a YouTube channel link or user link
-                try:
-                    video_urls = fetch_channel_videos(url)
-                    for video_url in video_urls:
-                        # Add each video URL to the queue for playback
-                        details, track_id = await YouTube.track(video_url)
-                        streamtype = "playlist"
-                        img = details["thumb"]
-                        cap = _["play_11"].format(details["title"], details["duration_min"])
-                        await queue_video_for_playback(video_url, details, track_id, streamtype, img, cap)
-                        
-                    await mystic.edit_text("All videos from the channel have been added to the queue.")
-                except Exception as e:
-                    print(e)  # Handle or log the error appropriately
-                    await mystic.edit_text(_["play_3"])  # Error message for the user
-                
-            else:
-                try:
-                    details, track_id = await YouTube.track(url)
-                except Exception as e:
-                    print(e)
-                    return await mystic.edit_text(_["play_3"])
-                streamtype = "youtube"
-                img = details["thumb"]
-                cap = _["play_11"].format(
-                    details["title"],
-                    details["duration_min"],
-                                  )
         elif await Spotify.valid(url):
             spotify = True
             if not config.SPOTIFY_CLIENT_ID and not config.SPOTIFY_CLIENT_SECRET:
