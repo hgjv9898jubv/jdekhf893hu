@@ -21,9 +21,9 @@ from pyrogram.types import (
 
 from config import BANNED_USERS, CLEANMODE_DELETE_MINS, MUSIC_BOT_NAME, OWNER_ID
 from strings import get_command
-from AlexaMusic import app
+from AlinaXIQ import app
 from pyrogram.enums import ChatType
-from AlexaMusic.utils.database import (
+from AlinaXIQ.utils.database import (
     add_nonadmin_chat,
     cleanmode_off,
     cleanmode_on,
@@ -47,9 +47,9 @@ from AlexaMusic.utils.database import (
     suggestion_off,
     suggestion_on,
 )
-from AlexaMusic.utils.decorators.admins import ActualAdminCB
-from AlexaMusic.utils.decorators.language import language, languageCB
-from AlexaMusic.utils.inline.settings import (
+from AlinaXIQ.utils.decorators.admins import ActualAdminCB
+from AlinaXIQ.utils.decorators.language import language, languageCB
+from AlinaXIQ.utils.inline.settings import (
     audio_quality_markup,
     auth_users_markup,
     cleanmode_settings_markup,
