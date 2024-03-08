@@ -1,15 +1,3 @@
-# Copyright (C) 2024 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
-
-""""
-TheTeamAlexa is a project of Telegram bots with variety of purposes.
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want or you can collabe if you have new ideas.
-"""
-
-
 import asyncio
 import os
 from random import randint
@@ -21,12 +9,12 @@ from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 import config
 from config import BANNED_USERS
 from strings import get_command
-from AlexaMusic import app
-from AlexaMusic.misc import db
-from AlexaMusic.utils import Alexabin, get_channeplayCB, seconds_to_min
-from AlexaMusic.utils.database import get_cmode, is_active_chat, is_music_playing
-from AlexaMusic.utils.decorators.language import language, languageCB
-from AlexaMusic.utils.inline import queue_back_markup, queue_markup
+from AlinaXIQ import app
+from AlinaXIQ.misc import db
+from AlinaXIQ.utils import Alinabin, get_channeplayCB, seconds_to_min
+from AlinaXIQ.utils.database import get_cmode, is_active_chat, is_music_playing
+from AlinaXIQ.utils.decorators.language import language, languageCB
+from AlinaXIQ.utils.inline import queue_back_markup, queue_markup
 
 ###Commands
 QUEUE_COMMAND = get_command("QUEUE_COMMAND")
@@ -199,7 +187,7 @@ async def queued_tracks(client, CallbackQuery: CallbackQuery, _):
             return await CallbackQuery.edit_message_text(msg, reply_markup=buttons)
         if "📌" in msg:
             msg = msg.replace("📌", "")
-        link = await Alexabin(msg)
+        link = await Alinabin(msg)
         med = InputMediaPhoto(media=link, caption=_["queue_3"].format(link))
         await CallbackQuery.edit_message_media(media=med, reply_markup=buttons)
     else:
