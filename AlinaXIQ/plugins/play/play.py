@@ -1,6 +1,5 @@
 import random
 import string
-from os import getenv
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
 from pytgcalls.exceptions import NoActiveGroupCall
@@ -27,33 +26,9 @@ from config import BANNED_USERS, lyrical
 from strings import get_command
 from AlinaXIQ.utils.database import is_served_user
 
-YAFA_NAME = getenv(
-    "YAFA_NAME", "‹ Alina ›"
-)  # اسم قناتك
-
-YAFA_CHANNEL = getenv(
-   " YAFA_CHANNEL", "https://t.me/MGIMT"
-)  # رابط قناتك
 
 # Command
 PLAY_COMMAND = get_command("PLAY_COMMAND")
-
-force_btn = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton(   
-              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
-        ],        
-    ]
-)
-async def check_is_joined(message):    
-    try:
-        userid = message.from_user.id
-        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
-        return True
-    except Exception:
-        await message.reply_text("**◇︰ جۆینی کەناڵی بۆت بکە سەرەتا :**",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
-        return False
         
 @app.on_message(filters.command(PLAY_COMMAND) & ~filters.private & ~BANNED_USERS)
 @PlayWrapper
