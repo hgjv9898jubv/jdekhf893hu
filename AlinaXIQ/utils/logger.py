@@ -11,8 +11,8 @@ as you want or you can collabe if you have new ideas.
 
 
 from config import LOG, LOG_GROUP_ID, MUSIC_BOT_NAME
-from AlexaMusic.utils.database import is_on_off
-from AlexaMusic import app
+from AlinaXIQ.utils.database import is_on_off
+from AlinaXIQ import app
 
 
 async def play_logs(message, streamtype):
