@@ -24,10 +24,10 @@ from config import (
     TELEGRAM_VIDEO_URL,
     adminlist,
 )
-from AlexaMusic import YouTube, app
-from AlexaMusic.core.call import Alexa
-from AlexaMusic.misc import SUDOERS, db
-from AlexaMusic.utils.database import (
+from AlinaXIQ import YouTube, app
+from AlinaXIQ.core.call import Alina
+from AlinaXIQ.misc import SUDOERS, db
+from AlinaXIQ.utils.database import (
     is_active_chat,
     is_music_playing,
     is_muted,
@@ -38,12 +38,12 @@ from AlexaMusic.utils.database import (
     mute_on,
     set_loop,
 )
-from AlexaMusic.utils.decorators.language import languageCB
-from AlexaMusic.utils.formatters import seconds_to_min
-from AlexaMusic.utils.inline.play import panel_markup_1, stream_markup, telegram_markup
-from AlexaMusic.utils.stream.autoclear import auto_clean
-from AlexaMusic.utils.thumbnails import gen_thumb
-from AlexaMusic.utils.theme import check_theme
+from AlinaXIQ.utils.decorators.language import languageCB
+from AlinaXIQ.utils.formatters import seconds_to_min
+from AlinaXIQ.utils.inline.play import panel_markup_1, stream_markup, telegram_markup
+from AlinaXIQ.utils.stream.autoclear import auto_clean
+from AlinaXIQ.utils.thumbnails import gen_thumb
+from AlinaXIQ.utils.theme import check_theme
 
 wrong = {}
 
