@@ -12,16 +12,16 @@ as you want or you can collabe if you have new ideas.
 import asyncio
 from pyrogram.enums import ChatType
 import config
-from AlexaMusic import app
-from AlexaMusic.core.call import Alexa, autoend
+from AlinaXIQ import app
+from AlinaXIQ.core.call import Alina, autoend
 from datetime import datetime, timedelta
-from AlexaMusic.utils.database import get_client, is_active_chat, is_autoend
+from AlinaXIQ.utils.database import get_client, is_active_chat, is_autoend
 
 
 async def auto_leave():
     if config.AUTO_LEAVING_ASSISTANT == str(True):
         while not await asyncio.sleep(config.AUTO_LEAVE_ASSISTANT_TIME):
-            from AlexaMusic.core.userbot import assistants
+            from AlinaXIQ.core.userbot import assistants
 
             for num in assistants:
                 client = await get_client(num)
@@ -64,7 +64,7 @@ async def auto_end():
                     continue
                 autoend[chat_id] = {}
                 try:
-                    await Alexa.stop_stream(chat_id)
+                    await Alina.stop_stream(chat_id)
                 except:
                     continue
                 try:
