@@ -11,8 +11,8 @@ as you want or you can collabe if you have new ideas.
 
 import random
 
-from AlexaMusic import userbot
-from AlexaMusic.core.mongo import mongodb
+from AlinaXIQ import userbot
+from AlinaXIQ.core.mongo import mongodb
 
 db = mongodb.assistants
 
