@@ -36,7 +36,7 @@ async def init():
         pass
     await app.start()
     for all_module in ALL_MODULES:
-        importlib.import_module("AlexaMusic.plugins" + all_module)
+        importlib.import_module("AlinaXIQ.plugins" + all_module)
     LOGGER("AlinaXIQ.plugins").info("Necessary Modules Imported Successfully.")
     await userbot.start()
     await Alina.start()
