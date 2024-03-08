@@ -119,7 +119,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             return await CallbackQuery.answer(_["admin_1"], show_alert=True)
         await CallbackQuery.answer()
         await music_off(chat_id)
-        await Alexa.pause_stream(chat_id)
+        await Alina.pause_stream(chat_id)
         await CallbackQuery.message.reply_text(
             _["admin_2"].format(mention), disable_web_page_preview=True
         )
@@ -128,13 +128,13 @@ async def del_back_playlist(client, CallbackQuery, _):
             return await CallbackQuery.answer(_["admin_3"], show_alert=True)
         await CallbackQuery.answer()
         await music_on(chat_id)
-        await Alexa.resume_stream(chat_id)
+        await Alina.resume_stream(chat_id)
         await CallbackQuery.message.reply_text(
             _["admin_4"].format(mention), disable_web_page_preview=True
         )
     elif command == "Stop" or command == "End":
         await CallbackQuery.answer()
-        await Alexa.stop_stream(chat_id)
+        await Alina.stop_stream(chat_id)
         await set_loop(chat_id, 0)
         await CallbackQuery.message.reply_text(
             _["admin_9"].format(mention), disable_web_page_preview=True
@@ -144,7 +144,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             return await CallbackQuery.answer(_["admin_5"], show_alert=True)
         await CallbackQuery.answer()
         await mute_on(chat_id)
-        await Alexa.mute_stream(chat_id)
+        await Alina.mute_stream(chat_id)
         await CallbackQuery.message.reply_text(
             _["admin_6"].format(mention), disable_web_page_preview=True
         )
@@ -153,7 +153,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             return await CallbackQuery.answer(_["admin_7"], show_alert=True)
         await CallbackQuery.answer()
         await mute_off(chat_id)
-        await Alexa.unmute_stream(chat_id)
+        await Alina.unmute_stream(chat_id)
         await CallbackQuery.message.reply_text(
             _["admin_8"].format(mention), disable_web_page_preview=True
         )
@@ -194,7 +194,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                     _["admin_10"].format(mention), disable_web_page_preview=True
                 )
                 try:
-                    return await Alexa.stop_stream(chat_id)
+                    return await Alina.stop_stream(chat_id)
                 except:
                     return
         except:
@@ -203,7 +203,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                 await CallbackQuery.message.reply_text(
                     _["admin_10"].format(mention), disable_web_page_preview=True
                 )
-                return await Alexa.stop_stream(chat_id)
+                return await Alina.stop_stream(chat_id)
             except:
                 return
         await CallbackQuery.answer()
@@ -224,7 +224,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                     _["admin_11"].format(title)
                 )
             try:
-                await Alexa.skip_stream(chat_id, link, video=status)
+                await Alina.skip_stream(chat_id, link, video=status)
             except Exception:
                 return await CallbackQuery.message.reply_text(_["call_9"])
             theme = await check_theme(chat_id)
@@ -255,7 +255,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             except:
                 return await mystic.edit_text(_["call_9"])
             try:
-                await Alexa.skip_stream(chat_id, file_path, video=status)
+                await Alina.skip_stream(chat_id, file_path, video=status)
             except Exception:
                 return await mystic.edit_text(_["call_9"])
             theme = await check_theme(chat_id)
@@ -277,7 +277,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             await mystic.delete()
         elif "index_" in queued:
             try:
-                await Alexa.skip_stream(chat_id, videoid, video=status)
+                await Alina.skip_stream(chat_id, videoid, video=status)
             except Exception:
                 return await CallbackQuery.message.reply_text(_["call_9"])
             button = telegram_markup(_, chat_id)
@@ -291,7 +291,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             await CallbackQuery.edit_message_text(txt)
         else:
             try:
-                await Alexa.skip_stream(chat_id, queued, video=status)
+                await Alina.skip_stream(chat_id, queued, video=status)
             except Exception:
                 return await CallbackQuery.message.reply_text(_["call_9"])
             if videoid == "telegram":
@@ -376,7 +376,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             if n == 0:
                 return await mystic.edit_text(_["admin_30"])
         try:
-            await Alexa.seek_stream(
+            await Alina.seek_stream(
                 chat_id,
                 file_path,
                 seconds_to_min(to_seek),
