@@ -11,10 +11,10 @@ as you want or you can collabe if you have new ideas.
 
 from pyrogram import filters
 
-from AlexaMusic import YouTube, app
-from AlexaMusic.utils.channelplay import get_channeplayCB
-from AlexaMusic.utils.decorators.language import languageCB
-from AlexaMusic.utils.stream.stream import stream
+from AlinaXIQ import YouTube, app
+from AlinaXIQ.utils.channelplay import get_channeplayCB
+from AlinaXIQ.utils.decorators.language import languageCB
+from AlinaXIQ.utils.stream.stream import stream
 from config import BANNED_USERS
 
 
