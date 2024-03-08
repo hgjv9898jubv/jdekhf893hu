@@ -15,10 +15,10 @@ from pyrogram.types import Message
 
 from config import BANNED_USERS
 from strings import get_command
-from AlexaMusic import app
-from AlexaMusic.core.call import Alexa
-from AlexaMusic.utils.database import is_music_playing, music_off
-from AlexaMusic.utils.decorators import AdminRightsCheck
+from AlinaXIQ import app
+from AlinaXIQ.core.call import Alina
+from AlinaXIQ.utils.database import is_music_playing, music_off
+from AlinaXIQ.utils.decorators import AdminRightsCheck
 
 # Commands
 PAUSE_COMMAND = get_command("PAUSE_COMMAND")
