@@ -17,8 +17,8 @@ from datetime import datetime, timedelta
 import config
 from config import clean
 from strings import get_string
-from AlexaMusic import app
-from AlexaMusic.utils.database import (
+from AlinaXIQ import app
+from AlinaXIQ.utils.database import (
     get_lang,
     get_private_served_chats,
     get_served_chats,
