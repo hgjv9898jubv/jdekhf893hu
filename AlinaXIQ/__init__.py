@@ -1,20 +1,9 @@
-# Copyright (C) 2024 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
 
-""""
-TheTeamAlexa is a project of Telegram bots with variety of purposes.
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want or you can collabe if you have new ideas.
-"""
-
-
-from AlexaMusic.core.bot import AlexaBot
-from AlexaMusic.core.dir import dirr
-from AlexaMusic.core.git import git
-from AlexaMusic.core.userbot import Userbot
-from AlexaMusic.misc import dbb, heroku, sudo
+from AlinaXIQ.core.bot import AlinaBot
+from AlinaXIQ.core.dir import dirr
+from AlinaXIQ.core.git import git
+from AlinaXIQ.core.userbot import Userbot
+from AlinaXIQ.misc import dbb, heroku, sudo
 
 from .logging import LOGGER
 
@@ -34,7 +23,7 @@ heroku()
 sudo()
 
 # Bot Client
-app = AlexaBot()
+app = AlinaBot()
 
 # Assistant Client
 userbot = Userbot()
