@@ -1,14 +1,3 @@
-# Copyright (C) 2024 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
-
-""""
-TheTeamAlexa is a project of Telegram bots with variety of purposes.
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want or you can collabe if you have new ideas.
-"""
-
 import asyncio
 import platform
 from sys import version as pyver
@@ -23,11 +12,11 @@ from pytgcalls.__version__ import __version__ as pytgver
 import config
 from config import BANNED_USERS, MUSIC_BOT_NAME
 from strings import get_command
-from AlexaMusic import YouTube, app
-from AlexaMusic.core.userbot import assistants
-from AlexaMusic.misc import SUDOERS, pymongodb
-from AlexaMusic.plugins import ALL_MODULES
-from AlexaMusic.utils.database import (
+from AlinaXIQ import YouTube, app
+from AlinaXIQ.core.userbot import assistants
+from AlinaXIQ.misc import SUDOERS, pymongodb
+from AlinaXIQ.plugins import ALL_MODULES
+from AlinaXIQ.utils.database import (
     get_global_tops,
     get_particulars,
     get_queries,
@@ -37,8 +26,8 @@ from AlexaMusic.utils.database import (
     get_top_chats,
     get_topp_users,
 )
-from AlexaMusic.utils.decorators.language import language, languageCB
-from AlexaMusic.utils.inline.stats import (
+from AlinaXIQ.utils.decorators.language import language, languageCB
+from AlinaXIQ.utils.inline.stats import (
     back_stats_buttons,
     back_stats_markup,
     get_stats_markup,
