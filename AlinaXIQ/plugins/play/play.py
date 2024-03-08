@@ -1,9 +1,10 @@
 import random
 import string
+
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
 from pytgcalls.exceptions import NoActiveGroupCall
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
+
 import config
 from AlinaXIQ import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
 from AlinaXIQ.core.call import Alina
@@ -26,10 +27,10 @@ from config import BANNED_USERS, lyrical
 from strings import get_command
 from AlinaXIQ.utils.database import is_served_user
 
-
 # Command
 PLAY_COMMAND = get_command("PLAY_COMMAND")
-        
+
+
 @app.on_message(filters.command(PLAY_COMMAND) & ~filters.private & ~BANNED_USERS)
 @PlayWrapper
 async def play_commnd(
@@ -45,7 +46,7 @@ async def play_commnd(
 ):
     if not await is_served_user(message.from_user.id):
         await message.reply_text(
-            text="😢 ᴅᴇᴀʀ ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀ ᴠᴇʀɪғɪᴇᴅ ᴀᴛ Alina ᴅᴀᴛᴀʙᴀsᴇ.\n☔ ᴘʟᴇᴀsᴇ ᴜsᴇ /verify ᴛᴏ ᴠᴇʀɪғʏ ʏᴏᴜʀsᴇʟғ ᴀᴛ ᴀʟina ᴅᴀᴛᴀʙᴀsᴇ.",
+            text="😢 ᴅᴇᴀʀ ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀ ᴠᴇʀɪғɪᴇᴅ ᴀᴛ ᴀʟᴇxᴀ ᴅᴀᴛᴀʙᴀsᴇ.\n☔ ᴘʟᴇᴀsᴇ ᴜsᴇ /verify ᴛᴏ ᴠᴇʀɪғʏ ʏᴏᴜʀsᴇʟғ ᴀᴛ ᴀʟᴇxᴀ ᴅᴀᴛᴀʙᴀsᴇ.",
         )
         return
     mystic = await message.reply_text(
@@ -56,7 +57,7 @@ async def play_commnd(
     plist_type = None
     spotify = None
     user_id = message.from_user.id if message.from_user else "1121532100"
-    user_mentoin = message.from_user.mentoin if message.from_user else "None"
+    user_name = message.from_user.first_name if message.from_user else "None"
     audio_telegram = (
         (message.reply_to_message.audio or message.reply_to_message.voice)
         if message.reply_to_message
@@ -94,7 +95,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_mentoin,
+                    user_name,
                     message.chat.id,
                     streamtype="telegram",
                     forceplay=fplay,
@@ -139,7 +140,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_mentoin,
+                    user_name,
                     message.chat.id,
                     video=True,
                     streamtype="telegram",
@@ -205,7 +206,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spplay"
                 img = config.SPOTIFY_PLAYLIST_IMG_URL
-                cap = _["play_12"].format(message.from_user.mentoin)
+                cap = _["play_12"].format(message.from_user.first_name)
             elif "album" in url:
                 try:
                     details, plist_id = await Spotify.album(url)
@@ -214,7 +215,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spalbum"
                 img = config.SPOTIFY_ALBUM_IMG_URL
-                cap = _["play_12"].format(message.from_user.mentoin)
+                cap = _["play_12"].format(message.from_user.first_name)
             elif "artist" in url:
                 try:
                     details, plist_id = await Spotify.artist(url)
@@ -223,7 +224,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spartist"
                 img = config.SPOTIFY_ARTIST_IMG_URL
-                cap = _["play_12"].format(message.from_user.mentoin)
+                cap = _["play_12"].format(message.from_user.first_name)
             else:
                 return await mystic.edit_text(_["play_17"])
         elif await Apple.valid(url):
@@ -275,7 +276,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_mentoin,
+                    user_name,
                     message.chat.id,
                     streamtype="soundcloud",
                     forceplay=fplay,
@@ -287,7 +288,7 @@ async def play_commnd(
             return await mystic.delete()
         else:
             try:
-                await Alina.stream_call(url)
+                await Alexa.stream_call(url)
             except NoActiveGroupCall:
                 await mystic.edit_text(
                     "ᴛʜᴇʀᴇ's ᴀɴ ᴇʀʀᴏʀ ɪɴ ᴛʜᴇ ʙᴏᴛ, ᴩʟᴇᴀsᴇ ʀᴇᴩᴏʀᴛ ɪᴛ ᴛᴏ sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ ᴀs sᴏᴏɴ ᴀs ᴩᴏssɪʙʟᴇ."
@@ -306,7 +307,7 @@ async def play_commnd(
                     message.from_user.id,
                     url,
                     chat_id,
-                    message.from_user.mentoin,
+                    message.from_user.first_name,
                     message.chat.id,
                     video=video,
                     streamtype="index",
@@ -364,7 +365,7 @@ async def play_commnd(
                 user_id,
                 details,
                 chat_id,
-                user_mentoin,
+                user_name,
                 message.chat.id,
                 video=video,
                 streamtype=streamtype,
@@ -451,7 +452,7 @@ async def play_music(client, CallbackQuery, _):
         chat_id, channel = await get_channeplayCB(_, cplay, CallbackQuery)
     except:
         return
-    user_mentoin = CallbackQuery.from_user.mentoin
+    user_name = CallbackQuery.from_user.first_name
     try:
         await CallbackQuery.message.delete()
         await CallbackQuery.answer()
@@ -492,7 +493,7 @@ async def play_music(client, CallbackQuery, _):
             CallbackQuery.from_user.id,
             details,
             chat_id,
-            user_mentoin,
+            user_name,
             CallbackQuery.message.chat.id,
             video,
             streamtype="youtube",
@@ -516,7 +517,7 @@ async def anonymous_check(client, CallbackQuery):
         return
 
 
-@app.on_callback_query(filters.regex("AlinaPlaylists") & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("AlexaPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
@@ -538,7 +539,7 @@ async def play_playlists_command(client, CallbackQuery, _):
         chat_id, channel = await get_channeplayCB(_, cplay, CallbackQuery)
     except:
         return
-    user_mentoin = CallbackQuery.from_user.mentoin
+    user_name = CallbackQuery.from_user.first_name
     await CallbackQuery.message.delete()
     try:
         await CallbackQuery.answer()
@@ -589,7 +590,7 @@ async def play_playlists_command(client, CallbackQuery, _):
             user_id,
             result,
             chat_id,
-            user_mentoin,
+            user_name,
             CallbackQuery.message.chat.id,
             video,
             streamtype="playlist",
