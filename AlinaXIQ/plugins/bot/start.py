@@ -36,7 +36,7 @@ from AlinaXIQ.utils.database import (
     is_on_off,
     is_served_private_chat,
 )
-from v.utils.decorators.language import LanguageStart
+from AlinaXIQ.utils.decorators.language import LanguageStart
 from AlinaXIQ.utils.inline import help_pannel, private_panel, start_pannel
 from AlinaXIQ.utils.command import commandpro
 
