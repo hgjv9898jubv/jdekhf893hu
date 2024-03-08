@@ -16,11 +16,11 @@ from pytgcalls.exceptions import NoActiveGroupCall
 import config
 from config import BANNED_USERS
 from strings import get_command
-from AlexaMusic import app
-from AlexaMusic.core.call import Alexa
-from AlexaMusic.utils.decorators.play import PlayWrapper
-from AlexaMusic.utils.logger import play_logs
-from AlexaMusic.utils.stream.stream import stream
+from AlinaXIQ import app
+from AlinaXIQ.core.call import Alina
+from AlinaXIQ.utils.decorators.play import PlayWrapper
+from AlinaXIQ.utils.logger import play_logs
+from AlinaXIQ.utils.stream.stream import stream
 
 # Command
 STREAM_COMMAND = get_command("STREAM_COMMAND")
@@ -44,7 +44,7 @@ async def stream_command(
             _["play_2"].format(channel) if channel else _["play_1"]
         )
         try:
-            await Alexa.stream_call(url)
+            await Alina.stream_call(url)
         except NoActiveGroupCall:
             await mystic.edit_text(
                 "ᴛʜᴇʀᴇ's ᴀɴ ɪssᴜᴇ ᴡɪᴛʜ ᴛʜᴇ ʙᴏᴛ. ᴘʟᴇᴀsᴇ ʀᴇᴘᴏʀᴛ ɪᴛ ᴛᴏ ᴍʏ ᴏᴡɴᴇʀ ᴀɴᴅ ᴀsᴋ ᴛʜᴇᴍ ᴛᴏ ᴄʜᴇᴄᴋ ʟᴏɢɢᴇʀ ɢʀᴏᴜᴘ."
@@ -63,7 +63,7 @@ async def stream_command(
                 message.from_user.id,
                 url,
                 chat_id,
-                message.from_user.first_name,
+                message.from_user.mentoin,
                 message.chat.id,
                 video=True,
                 streamtype="index",
