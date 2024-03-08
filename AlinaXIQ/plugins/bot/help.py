@@ -17,12 +17,12 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 
 from config import BANNED_USERS
 from strings import get_command, get_string, helpers
-from AlexaMusic import app
-from AlexaMusic.misc import SUDOERS
-from AlexaMusic.utils import help_pannel
-from AlexaMusic.utils.database import get_lang, is_commanddelete_on
-from AlexaMusic.utils.decorators.language import LanguageStart, languageCB
-from AlexaMusic.utils.inline.help import help_back_markup, private_help_panel
+from AlinaXIQ import app
+from AlinaXIQ.misc import SUDOERS
+from AlinaXIQ.utils import help_pannel
+from AlinaXIQ.utils.database import get_lang, is_commanddelete_on
+from AlinaXIQ.utils.decorators.language import LanguageStart, languageCB
+from AlinaXIQ.utils.inline.help import help_back_markup, private_help_panel
 
 ### Command
 HELP_COMMAND = get_command("HELP_COMMAND")
