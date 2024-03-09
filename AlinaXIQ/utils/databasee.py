@@ -6,9 +6,9 @@ from AlinaXIQ import userbot
 from AlinaXIQ.core.mongo import mongodb
 
 
-chatsdb = db.chats
+chatsdb = mongodb.chats
 db = mongodb.assistants
-gbansdb = db.gban
+gbansdb = mongodb.gban
 channeldb = mongodb.cplaymode
 commanddb = mongodb.commands
 cleandb = mongodb.cleanmode
@@ -34,7 +34,7 @@ blockeddb = mongodb.blockedusers
 privatedb = mongodb.privatechats
 onoffdb = mongodb.onoffper
 pmpermitdb = mongodb.permit
-sudoersdb = db.sudoers
+sudoersdb = mongodb.sudoers
 
 
 # Shifting to memory [ mongo sucks often]
