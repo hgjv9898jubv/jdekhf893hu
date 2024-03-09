@@ -20,7 +20,7 @@ from AlinaXIQ.utils.inline.play import stream_markup, queue_markup, telegram_mar
 from AlinaXIQ.utils.inline.playlist import close_markup
 from AlinaXIQ.utils.pastebin import Alinabin
 from AlinaXIQ.utils.stream.queue import put_queue, put_queue_index
-from AlinaXIQ.utils.thumbnails import gen_thumb, gen_qthumb
+from AlinaXIQ.utils.thumbnails import gen_thumb
 from AlinaXIQ.utils.theme import check_theme
 
 
@@ -165,7 +165,7 @@ async def stream(
             )
             theme = await check_theme(chat_id)
             position = len(db.get(chat_id)) - 1
-            qimg = await gen_qthumb(vidid, user_id, theme)
+            qimg = await gen_thumb(vidid, user_id, theme)
             button = queue_markup(_, vidid, chat_id)
             run = await app.send_photo(
                 original_chat_id,
