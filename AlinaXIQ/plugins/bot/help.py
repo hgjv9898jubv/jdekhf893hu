@@ -1,15 +1,3 @@
-# Copyright (C) 2024 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
-
-""""
-TheTeamAlexa is a project of Telegram bots with variety of purposes.
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want or you can collabe if you have new ideas.
-"""
-
-
 from typing import Union
 
 from pyrogram import filters, types
@@ -74,18 +62,6 @@ async def helper_cb(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
     cb = callback_data.split(None, 1)[1]
     keyboard = help_back_markup(_)
-    if cb == "hb5":
-        if CallbackQuery.from_user.id not in SUDOERS:
-            return await CallbackQuery.answer(
-                "ᴏɴʟʏ ғᴏʀ ᴏᴡɴᴇʀ ᴀɴᴅ sᴜᴅᴏᴇʀs", show_alert=True
-            )
-        else:
-            await CallbackQuery.edit_message_text(helpers.HELP_5, reply_markup=keyboard)
-            return await CallbackQuery.answer()
-    try:
-        await CallbackQuery.answer()
-    except:
-        pass
     if cb == "hb1":
         await CallbackQuery.edit_message_text(helpers.HELP_1, reply_markup=keyboard)
     elif cb == "hb2":
@@ -94,7 +70,43 @@ async def helper_cb(client, CallbackQuery, _):
         await CallbackQuery.edit_message_text(helpers.HELP_3, reply_markup=keyboard)
     elif cb == "hb4":
         await CallbackQuery.edit_message_text(helpers.HELP_4, reply_markup=keyboard)
+    elif cb == "hb5":
+        await CallbackQuery.edit_message_text(helpers.HELP_5, reply_markup=keyboard)
+    elif cb == "hb6":
+        await CallbackQuery.edit_message_text(helpers.HELP_6, reply_markup=keyboard)
     elif cb == "hb7":
         await CallbackQuery.edit_message_text(helpers.HELP_7, reply_markup=keyboard)
     elif cb == "hb8":
         await CallbackQuery.edit_message_text(helpers.HELP_8, reply_markup=keyboard)
+    elif cb == "hb9":
+        await CallbackQuery.edit_message_text(helpers.HELP_9, reply_markup=keyboard)
+    elif cb == "hb10":
+        await CallbackQuery.edit_message_text(helpers.HELP_10, reply_markup=keyboard)
+    elif cb == "hb11":
+        await CallbackQuery.edit_message_text(helpers.HELP_11, reply_markup=keyboard)
+    elif cb == "hb12":
+        await CallbackQuery.edit_message_text(helpers.HELP_12, reply_markup=keyboard)
+    elif cb == "hb13":
+        await CallbackQuery.edit_message_text(helpers.HELP_13, reply_markup=keyboard)
+    elif cb == "hb14":
+        await CallbackQuery.edit_message_text(helpers.HELP_14, reply_markup=keyboard)
+    elif cb == "hb15":
+        await CallbackQuery.edit_message_text(helpers.HELP_15, reply_markup=keyboard)
+    elif cb == "hb16":
+        await CallbackQuery.edit_message_text(helpers.HELP_16, reply_markup=keyboard)   
+    elif cb == "hb17":
+        await CallbackQuery.edit_message_text(helpers.HELP_17, reply_markup=keyboard)
+    elif cb == "hb18":
+        await CallbackQuery.edit_message_text(helpers.HELP_18, reply_markup=keyboard)
+    elif cb == "hb19":
+        await CallbackQuery.edit_message_text(helpers.HELP_19, reply_markup=keyboard)
+    elif cb == "hb20":
+        await CallbackQuery.edit_message_text(helpers.HELP_20, reply_markup=keyboard)
+    elif cb == "hb21":
+        await CallbackQuery.edit_message_text(helpers.HELP_21, reply_markup=keyboard)
+    elif cb == "hb22":
+        await CallbackQuery.edit_message_text(helpers.HELP_22, reply_markup=keyboard)
+    elif cb == "hb23":
+        await CallbackQuery.edit_message_text(helpers.HELP_23, reply_markup=keyboard)
+    elif cb == "hb24":
+        await CallbackQuery.edit_message_text(helpers.HELP_24, reply_markup=keyboard)
