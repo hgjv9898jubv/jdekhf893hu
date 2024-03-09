@@ -57,7 +57,7 @@ async def play_commnd(
     plist_type = None
     spotify = None
     user_id = message.from_user.id if message.from_user else "1121532100"
-    user_name = message.from_user.first_name if message.from_user else "None"
+    user_mentoin = message.from_user.mentoin if message.from_user else "None"
     audio_telegram = (
         (message.reply_to_message.audio or message.reply_to_message.voice)
         if message.reply_to_message
@@ -95,7 +95,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_name,
+                    user_mentoin,
                     message.chat.id,
                     streamtype="telegram",
                     forceplay=fplay,
@@ -140,7 +140,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_name,
+                    user_mentoin,
                     message.chat.id,
                     video=True,
                     streamtype="telegram",
@@ -206,7 +206,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spplay"
                 img = config.SPOTIFY_PLAYLIST_IMG_URL
-                cap = _["play_12"].format(message.from_user.first_name)
+                cap = _["play_12"].format(message.from_user.mentoin)
             elif "album" in url:
                 try:
                     details, plist_id = await Spotify.album(url)
@@ -215,7 +215,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spalbum"
                 img = config.SPOTIFY_ALBUM_IMG_URL
-                cap = _["play_12"].format(message.from_user.first_name)
+                cap = _["play_12"].format(message.from_user.mentoin)
             elif "artist" in url:
                 try:
                     details, plist_id = await Spotify.artist(url)
@@ -224,7 +224,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spartist"
                 img = config.SPOTIFY_ARTIST_IMG_URL
-                cap = _["play_12"].format(message.from_user.first_name)
+                cap = _["play_12"].format(message.from_user.mentoin)
             else:
                 return await mystic.edit_text(_["play_17"])
         elif await Apple.valid(url):
@@ -244,7 +244,7 @@ async def play_commnd(
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "playlist"
                 plist_type = "apple"
-                cap = _["play_13"].format(message.from_user.first_name)
+                cap = _["play_13"].format(message.from_user.mentoin)
                 img = url
             else:
                 return await mystic.edit_text(_["play_16"])
@@ -276,7 +276,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_name,
+                    user_mentoin,
                     message.chat.id,
                     streamtype="soundcloud",
                     forceplay=fplay,
@@ -307,7 +307,7 @@ async def play_commnd(
                     message.from_user.id,
                     url,
                     chat_id,
-                    message.from_user.first_name,
+                    message.from_user.mentoin,
                     message.chat.id,
                     video=video,
                     streamtype="index",
@@ -365,7 +365,7 @@ async def play_commnd(
                 user_id,
                 details,
                 chat_id,
-                user_name,
+                user_mentoin,
                 message.chat.id,
                 video=video,
                 streamtype=streamtype,
@@ -452,7 +452,7 @@ async def play_music(client, CallbackQuery, _):
         chat_id, channel = await get_channeplayCB(_, cplay, CallbackQuery)
     except:
         return
-    user_name = CallbackQuery.from_user.first_name
+    user_mentoin = CallbackQuery.from_user.mentoin
     try:
         await CallbackQuery.message.delete()
         await CallbackQuery.answer()
@@ -493,7 +493,7 @@ async def play_music(client, CallbackQuery, _):
             CallbackQuery.from_user.id,
             details,
             chat_id,
-            user_name,
+            user_mentoin,
             CallbackQuery.message.chat.id,
             video,
             streamtype="youtube",
@@ -517,7 +517,7 @@ async def anonymous_check(client, CallbackQuery):
         return
 
 
-@app.on_callback_query(filters.regex("AlexaPlaylists") & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("AlinaPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
@@ -539,7 +539,7 @@ async def play_playlists_command(client, CallbackQuery, _):
         chat_id, channel = await get_channeplayCB(_, cplay, CallbackQuery)
     except:
         return
-    user_name = CallbackQuery.from_user.first_name
+    user_mentoin = CallbackQuery.from_user.mentoin
     await CallbackQuery.message.delete()
     try:
         await CallbackQuery.answer()
@@ -590,7 +590,7 @@ async def play_playlists_command(client, CallbackQuery, _):
             user_id,
             result,
             chat_id,
-            user_name,
+            user_mentoin,
             CallbackQuery.message.chat.id,
             video,
             streamtype="playlist",
