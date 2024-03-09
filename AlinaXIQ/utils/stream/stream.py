@@ -19,7 +19,7 @@ from AlinaXIQ.utils.database import (
 from AlinaXIQ.utils.exceptions import AssistantErr
 from AlinaXIQ.utils.inline.play import stream_markup, queue_markup, telegram_markup
 from AlinaXIQ.utils.inline.playlist import close_markup
-from AlinaXIQ.utils.pastebin import Alexabin
+from AlinaXIQ.utils.pastebin import Alinabin
 from AlinaXIQ.utils.stream.queue import put_queue, put_queue_index
 from AlinaXIQ.utils.thumbnails import gen_thumb
 from AlinaXIQ.utils.theme import check_theme
