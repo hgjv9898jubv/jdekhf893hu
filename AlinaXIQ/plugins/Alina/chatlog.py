@@ -5,7 +5,7 @@ from pyrogram import filters
 from pyrogram.types import(InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, InputMediaVideo, Message)
 from config import GROUP_BOT, LOG_GROUP_ID
 from AlinaXIQ import app 
-from AlinaXIQ.utils.database import remove_served_chat
+from AlinaXIQ.utils.databasee import delete_served_chat
 from pyrogram.errors import RPCError
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from os import environ
