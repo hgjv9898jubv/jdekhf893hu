@@ -1,53 +1,26 @@
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, Message
-
-from config import BANNED_USERS
-from strings import get_command, get_string
+from strings.filters import command
 from AlinaXIQ import app
 from AlinaXIQ.utils.database import get_lang, set_lang
 from AlinaXIQ.utils.decorators import ActualAdminCB, language, languageCB
-
-# Languages Available
+from config import BANNED_USERS
+from strings import get_string, languages_present
 
 
 def lanuages_keyboard(_):
     keyboard = InlineKeyboard(row_width=2)
-    keyboard.row(
-        InlineKeyboardButton(
-            text="🇦🇺 ᴇɴɢʟɪsʜ 🇦🇺",
-            callback_data=f"languages:en",
-        ),
-        InlineKeyboardButton(
-            text="🇮🇳 हिन्दी 🇮🇳",
-            callback_data=f"languages:hi",
-        ),
-    )
-    keyboard.row(
-        InlineKeyboardButton(
-            text="🇱🇰 සිංහල 🇱🇰",
-            callback_data=f"languages:si",
-        ),
-        InlineKeyboardButton(
-            text="🇦🇿 Azərbaycan 🇦🇿",
-            callback_data=f"languages:az",
-        ),
-    )
-    keyboard.row(
-        InlineKeyboardButton(
-            text="🇮🇳 ગુજરાતી 🇮🇳",
-            callback_data=f"languages:gu",
-        ),
-        InlineKeyboardButton(
-            text="🇹🇷 Türkiye Türkçesi 🇹🇷",
-            callback_data=f"languages:tr",
-        ),
-    )
-    keyboard.row(
-        InlineKeyboardButton(
-            text="🐕 ᴄʜᴇᴇᴍs 🐕",
-            callback_data=f"languages:cheems",
-        ),
+    keyboard.add(
+        *[
+            (
+                InlineKeyboardButton(
+                    text=languages_present[i],
+                    callback_data=f"languages:{i}",
+                )
+            )
+            for i in languages_present
+        ]
     )
     keyboard.row(
         InlineKeyboardButton(
@@ -59,15 +32,12 @@ def lanuages_keyboard(_):
     return keyboard
 
 
-LANGUAGE_COMMAND = get_command("LANGUAGE_COMMAND")
-
-
-@app.on_message(filters.command(LANGUAGE_COMMAND) & filters.group & ~BANNED_USERS)
+@app.on_message(command(["/lang", "/setlang", "/language","زمان"]) & ~BANNED_USERS)
 @language
 async def langs_command(client, message: Message, _):
     keyboard = lanuages_keyboard(_)
     await message.reply_text(
-        _["setting_1"].format(message.chat.title, message.chat.id),
+        _["lang_1"],
         reply_markup=keyboard,
     )
 
@@ -89,17 +59,14 @@ async def language_markup(client, CallbackQuery, _):
     langauge = (CallbackQuery.data).split(":")[1]
     old = await get_lang(CallbackQuery.message.chat.id)
     if str(old) == str(langauge):
-        return await CallbackQuery.answer(
-            "ʏᴏᴜ'ʀᴇ ᴀʟʀᴇᴀᴅʏ ᴜsɪɴɢ sᴀᴍᴇ ʟᴀɴɢᴜᴀɢᴇ ғᴏʀ ᴛʜɪs ᴄʜᴀᴛ.", show_alert=True
-        )
+        return await CallbackQuery.answer(_["lang_4"], show_alert=True)
     try:
         _ = get_string(langauge)
-        await CallbackQuery.answer(
-            "sᴜᴄᴄᴇssғᴜʟʟʏ ᴄʜᴀɴɢᴇᴅ ʏᴏᴜʀ ʟᴀɴɢᴜᴀɢᴇ.", show_alert=True
-        )
+        await CallbackQuery.answer(_["lang_2"], show_alert=True)
     except:
+        _ = get_string(old)
         return await CallbackQuery.answer(
-            "ғᴀɪʟᴇᴅ ᴛᴏ ᴄʜᴀɴɢᴇ ʟᴀɴɢᴜᴀɢᴇ ᴏʀ ᴛʜᴇ ʟᴀɴɢᴜᴀɢᴇ ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ.",
+            _["lang_3"],
             show_alert=True,
         )
     await set_lang(CallbackQuery.message.chat.id, langauge)
