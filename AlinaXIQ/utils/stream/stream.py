@@ -29,7 +29,7 @@ async def stream(
     user_id,
     result,
     chat_id,
-    user_mentoin,
+    user_name,
     original_chat_id,
     video: Union[bool, str] = None,
     streamtype: Union[bool, str] = None,
@@ -70,7 +70,7 @@ async def stream(
                     f"vid_{vidid}",
                     title,
                     duration_min,
-                    user_mentoin,
+                    user_name,
                     vidid,
                     user_id,
                     "video" if video else "audio",
@@ -98,7 +98,7 @@ async def stream(
                     file_path if direct else f"vid_{vidid}",
                     title,
                     duration_min,
-                    user_mentoin,
+                    user_name,
                     vidid,
                     user_id,
                     "video" if video else "audio",
@@ -114,7 +114,7 @@ async def stream(
                     f"https://t.me/{app.username}?start=info_{vidid}",
                     title[:23],
                     duration_min,
-                    user_mention,
+                    user_name,
                     ),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
@@ -157,7 +157,7 @@ async def stream(
                 file_path if direct else f"vid_{vidid}",
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 vidid,
                 user_id,
                 "video" if video else "audio",
@@ -170,7 +170,7 @@ async def stream(
                 original_chat_id,
                 photo=qimg,
                 caption=_["queue_4"].format(
-                    position, title[:27], duration_min, user_mentoin
+                    position, title[:27], duration_min, user_name
                 ),
                 reply_markup=InlineKeyboardMarkup(button),
             )
@@ -186,7 +186,7 @@ async def stream(
                 file_path if direct else f"vid_{vidid}",
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 vidid,
                 user_id,
                 "video" if video else "audio",
@@ -203,7 +203,7 @@ async def stream(
                     f"https://t.me/{app.username}?start=info_{vidid}",
                     title[:23],
                     duration_min,
-                    user_mention,
+                    user_name,
                     ),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
@@ -222,7 +222,7 @@ async def stream(
                 file_path,
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 streamtype,
                 user_id,
                 "audio",
@@ -230,7 +230,7 @@ async def stream(
             position = len(db.get(chat_id)) - 1
             await app.send_message(
                 original_chat_id,
-                _["queue_4"].format(position, title[:30], duration_min, user_mentoin),
+                _["queue_4"].format(position, title[:30], duration_min, user_name),
             )
         else:
             if not forceplay:
@@ -242,7 +242,7 @@ async def stream(
                 file_path,
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 streamtype,
                 user_id,
                 "audio",
@@ -252,7 +252,7 @@ async def stream(
             run = await app.send_photo(
                 original_chat_id,
                 photo=config.SOUNCLOUD_IMG_URL,
-                caption=_["stream_3"].format(title, duration_min, user_mentoin),
+                caption=_["stream_3"].format(title, duration_min, user_name),
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
@@ -270,7 +270,7 @@ async def stream(
                 file_path,
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 streamtype,
                 user_id,
                 "video" if video else "audio",
@@ -278,7 +278,7 @@ async def stream(
             position = len(db.get(chat_id)) - 1
             await app.send_message(
                 original_chat_id,
-                _["queue_4"].format(position, title[:30], duration_min, user_mentoin),
+                _["queue_4"].format(position, title[:30], duration_min, user_name),
             )
         else:
             if not forceplay:
@@ -290,7 +290,7 @@ async def stream(
                 file_path,
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 streamtype,
                 user_id,
                 "video" if video else "audio",
@@ -302,7 +302,7 @@ async def stream(
             run = await app.send_photo(
                 original_chat_id,
                 photo=config.TELEGRAM_VIDEO_URL if video else config.TELEGRAM_AUDIO_URL,
-                caption=_["stream_4"].format(title, link, duration_min, user_mentoin),
+                caption=_["stream_4"].format(title, link, duration_min, user_name),
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
@@ -321,7 +321,7 @@ async def stream(
                 f"live_{vidid}",
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 vidid,
                 user_id,
                 "video" if video else "audio",
@@ -329,7 +329,7 @@ async def stream(
             position = len(db.get(chat_id)) - 1
             await app.send_message(
                 original_chat_id,
-                _["queue_4"].format(position, title[:30], duration_min, user_mentoin),
+                _["queue_4"].format(position, title[:30], duration_min, user_name),
             )
         else:
             if not forceplay:
@@ -350,7 +350,7 @@ async def stream(
                 f"live_{vidid}",
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 vidid,
                 user_id,
                 "video" if video else "audio",
@@ -366,7 +366,7 @@ async def stream(
                     f"https://t.me/{app.username}?start=info_{vidid}",
                     title[:23],
                     duration_min,
-                    user_mention,
+                    user_name,
                 ),
                 reply_markup=InlineKeyboardMarkup(button),
             )
@@ -389,7 +389,7 @@ async def stream(
             )
             position = len(db.get(chat_id)) - 1
             await mystic.edit_text(
-                _["queue_4"].format(position, title[:30], duration_min, user_mentoin)
+                _["queue_4"].format(position, title[:30], duration_min, user_name)
             )
         else:
             if not forceplay:
@@ -415,7 +415,7 @@ async def stream(
             run = await app.send_photo(
                 original_chat_id,
                 photo=config.STREAM_IMG_URL,
-                caption=_["stream_2"].format(user_mentoin),
+                caption=_["stream_2"].format(user_name),
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
