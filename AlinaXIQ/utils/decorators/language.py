@@ -1,6 +1,6 @@
 from strings import get_string
-from AlexaMusic.misc import SUDOERS
-from AlexaMusic.utils.database import get_lang, is_commanddelete_on, is_maintenance
+from AlinaXIQ.misc import SUDOERS
+from AlinaXIQ.utils.database import get_lang, is_commanddelete_on, is_maintenance
 
 
 def language(mystic):
