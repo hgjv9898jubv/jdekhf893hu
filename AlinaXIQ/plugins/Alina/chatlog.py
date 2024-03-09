@@ -3,7 +3,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram import filters
 from pyrogram.types import(InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, InputMediaVideo, Message)
-from config import GROUP_BOT, LOGGER_ID
+from config import GROUP_BOT, LOG_GROUP_ID
 from AlinaXIQ import app 
 from AlinaXIQ.utils.database import delete_served_chat
 from pyrogram.errors import RPCError
@@ -56,7 +56,7 @@ async def join_watcher(_, message):
                 f"**📈 ژمارەی ئەندام: {count}\n**"
                 f"**🍓 زیادکرا لەلایەن: {message.from_user.mention}**"
             )
-            await app.send_photo(LOGGER_ID, photo=random.choice(photo), caption=msg, reply_markup=InlineKeyboardMarkup([
+            await app.send_photo(LOG_GROUP_ID, photo=random.choice(photo), caption=msg, reply_markup=InlineKeyboardMarkup([
             [InlineKeyboardButton(f"🍓 بینینی گرووپ 🍓", url=f"{link}")]
          ]))
 
