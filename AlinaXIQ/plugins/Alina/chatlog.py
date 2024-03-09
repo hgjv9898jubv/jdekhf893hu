@@ -5,7 +5,7 @@ from pyrogram import filters
 from pyrogram.types import(InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, InputMediaVideo, Message)
 from config import GROUP_BOT, LOG_GROUP_ID
 from AlinaXIQ import app 
-from AlinaXIQ.utils.database import delete_served_chat
+from AlinaXIQ.utils.database import remove_served_chat
 from pyrogram.errors import RPCError
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from os import environ
@@ -73,7 +73,7 @@ async def on_left_chat_member(_, message: Message):
         await app.send_photo(GROUP_BOT, photo=random.choice(photo), caption=left, reply_markup=InlineKeyboardMarkup([
             [InlineKeyboardButton(f"نوێکارییەکانی ئەلینا 🍻", url=f"https://t.me/MGIMT")]
          ]))
-        await delete_served_chat(chat_id)
+        await remove_served_chat(chat_id)
         await userbot.one.leave_chat(chat_id)
 
 
