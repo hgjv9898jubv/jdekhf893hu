@@ -5,7 +5,7 @@ from AlinaXIQ import app
 from config import OWNER_ID
 from AlinaXIQ.misc import SUDOERS
 from pyrogram.types import Message
-from AlinaXIQ.utils.database import add_served_chat, delete_served_chat
+from AlinaXIQ.utils.databasee import add_served_chat, delete_served_chat
 from AlinaXIQ.utils.alina_ban import admin_filter, sudo_filter
 from pyrogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from strings.filters import command
