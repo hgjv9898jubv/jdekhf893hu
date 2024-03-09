@@ -1,9 +1,9 @@
 import asyncio
-
+from os import getenv
 from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter, ChatMemberStatus
 from pyrogram.types import CallbackQuery, Message
-
+from dotenv import load_dotenv
 from config import BANNED_USERS, MUSIC_BOT_NAME, adminlist, lyrical
 from strings import get_command
 from AlinaXIQ import app
