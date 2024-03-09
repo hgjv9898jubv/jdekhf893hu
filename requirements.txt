@@ -16,6 +16,8 @@ Faker
 pydub
 pycountry
 heroku3
+PyYAML
+lyricsgenius
 ntgcalls==1.0.7
 apscheduler
 motor 
@@ -33,7 +35,6 @@ pykeyboard
 pyshorteners
 pyrogram
 python-dotenv
-pyyaml==6.0.1
 requests
 emojis
 speedtest-cli
