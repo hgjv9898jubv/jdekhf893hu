@@ -1,6 +1,6 @@
 from pyrogram import filters
 from pyrogram.types import Message
-
+from strings.filters import command
 from strings import get_command
 from AlinaXIQ import app
 from AlinaXIQ.misc import SUDOERS
@@ -64,3 +64,8 @@ async def activevi_(_, message: Message):
             f"**ʟɪsᴛ ᴏғ ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴄᴛɪᴠᴇ ᴠɪᴅᴇᴏᴄʜᴀᴛs ᴏɴ ᴍᴜsɪᴄ ʙᴏᴛ :-**\n\n{text}",
             disable_web_page_preview=True,
         )
+@app.on_message(command(["/ac","/av","چالاکی پەخش"]) & SUDOERS)
+async def start(client: Client, message: Message):
+    ac_audio = str(len(await get_active_chats()))
+    ac_video = str(len(await get_active_video_chats()))
+    await message.reply_text(f"<b>✫ زانیاری چالاکی پەخشکردن :</b>\n\n<b>دەنگی : {ac_audio}\nڤیدیۆ : {ac_video}</b>", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('✯ داخستن ✯', callback_data=f"close")]]))
