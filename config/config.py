@@ -1,13 +1,3 @@
-# Copyright (C) 2021-2022 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
-
-""""
-Alexa is a Telegram Audio and video streaming bot 
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want.
-"""
 
 import re
 import sys
@@ -23,22 +13,28 @@ API_HASH = getenv("API_HASH")
 
 BOT_TOKEN = getenv("BOT_TOKEN")
 
+BOT_USERNAME = getenv("BOT_USERNAME" , "IQMCBOT")
+
 MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 
-DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", "900"))
+DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", "9999"))
 
-SONG_DOWNLOAD_DURATION = int(getenv("SONG_DOWNLOAD_DURATION_LIMIT", "180"))
+SONG_DOWNLOAD_DURATION = int(getenv("SONG_DOWNLOAD_DURATION_LIMIT", "9999"))
 
 LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", ""))
 
-MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", "乛𝘼𝙇𝙀𝙓𝘼🕊️⃝🦋⁪⁬𝙈𝙐𝙎𝙄𝘾")
+MUSIC_BOT_NAME = getenv("MUSIC_BOT_NAME", None)
 
-OWNER_ID = list(map(int, getenv("OWNER_ID", "6174058850 5745099463").split()))
+OWNER_USERNAME = getenv("OWNER_USERNAME","IQ7amo")
+
+USER_OWNER = getenv("USER_OWNER","IQ7amo")
+
+OWNER_ID = list(map(int, getenv("OWNER_ID", "1818734394 833360381").split()))
 
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 
 BOT_ID = getenv("BOT_ID")
-
+ASSUSERNAME = getenv("ASSUSERNAME" , None)
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 
 UPSTREAM_REPO = getenv(
@@ -49,9 +45,11 @@ UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 
 GIT_TOKEN = getenv("GIT_TOKEN", None)
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/Alexa_BotUpdates")
-SUPPORT_GROUP = getenv("SUPPORT_GROUP", "https://t.me/Alexa_Help")
-
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/MGIMT")
+SUPPORT_GROUP = getenv("SUPPORT_GROUP", "https://t.me/IQSUPP")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/IQSUPP")
+OWNER_CHANNEL = getenv("OWNER_CHANNEL", "https://t.me/EHS4SS")
+GROUP_BOT = int(getenv("GROUP_BOT", "-1001962701094"))
 AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", "False")
 
 AUTO_LEAVE_ASSISTANT_TIME = int(getenv("ASSISTANT_LEAVE_TIME", "11500"))
