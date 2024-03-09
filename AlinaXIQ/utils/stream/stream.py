@@ -1,3 +1,4 @@
+
 import os
 from random import randint
 from typing import Union
@@ -17,11 +18,12 @@ from AlinaXIQ.utils.database import (
 )
 from AlinaXIQ.utils.exceptions import AssistantErr
 from AlinaXIQ.utils.inline.play import stream_markup, queue_markup, telegram_markup
-from AlinaXIQ.utils.inline.playlist import close_markup
-from AlinaXIQ.utils.pastebin import Alinabin
+from AlexaMusic.utils.inline.playlist import close_markup
+from AlinaXIQ.utils.pastebin import Alexabin
 from AlinaXIQ.utils.stream.queue import put_queue, put_queue_index
 from AlinaXIQ.utils.thumbnails import gen_thumb
 from AlinaXIQ.utils.theme import check_theme
+
 
 async def stream(
     _,
@@ -111,8 +113,10 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                    duration_min,
-                    user_name,
+                        title[:27],
+                        f"https://t.me/{app.username}?start=info_{vidid}",
+                        duration_min,
+                        user_name,
                     ),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
@@ -198,8 +202,10 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                    duration_min,
-                    user_name,
+                        title[:27],
+                        f"https://t.me/{app.username}?start=info_{vidid}",
+                        duration_min,
+                        user_name,
                     ),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
@@ -359,6 +365,8 @@ async def stream(
                 original_chat_id,
                 photo=img,
                 caption=_["stream_1"].format(
+                    title[:27],
+                    f"https://t.me/{app.username}?start=info_{vidid}",
                     duration_min,
                     user_name,
                 ),
@@ -377,7 +385,7 @@ async def stream(
                 "index_url",
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 link,
                 "video" if video else "audio",
             )
@@ -400,7 +408,7 @@ async def stream(
                 "index_url",
                 title,
                 duration_min,
-                user_mentoin,
+                user_name,
                 link,
                 "video" if video else "audio",
                 forceplay=forceplay,
