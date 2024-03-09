@@ -23,7 +23,7 @@ from AlinaXIQ.utils.stream.queue import put_queue, put_queue_index
 from AlinaXIQ.utils.thumbnails import gen_thumb
 from AlinaXIQ.utils.theme import check_theme
 
-
+user_name
 async def stream(
     _,
     mystic,
