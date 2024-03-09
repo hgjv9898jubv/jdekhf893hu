@@ -1,6 +1,6 @@
 import asyncio
 from os import getenv
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.enums import ChatMembersFilter, ChatMemberStatus
 from pyrogram.types import CallbackQuery, Message
 from dotenv import load_dotenv
