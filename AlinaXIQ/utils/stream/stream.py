@@ -8,7 +8,7 @@ import config
 from AlinaXIQ import Carbon, YouTube, app
 from AlinaXIQ.core.call import Alina
 from AlinaXIQ.misc import db
-from AlinaXIQ.utils.database import add_active_video_chat, is_active_chat, is_video_allowed,
+from AlinaXIQ.utils.database import add_active_video_chat, is_active_chat, is_video_allowed
 from AlinaXIQ.utils.exceptions import AssistantErr
 from AlinaXIQ.utils.inline import aq_markup, queuemarkup, close_markup, stream_markup, stream_markup2, panel_markup_4
 from AlinaXIQ.utils.pastebin import AlinaBin
