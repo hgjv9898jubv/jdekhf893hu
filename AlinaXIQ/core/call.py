@@ -1,7 +1,7 @@
 import asyncio
 from datetime import datetime, timedelta
 from typing import Union
-from pyrogram.enums import ChatMemberStatus
+
 from pyrogram import Client
 from pyrogram.errors import (
     ChatAdminRequired,
@@ -10,11 +10,8 @@ from pyrogram.errors import (
 )
 from pyrogram.types import InlineKeyboardMarkup
 from pytgcalls import PyTgCalls
-from pytgcalls.exceptions import (
-    AlreadyJoinedError,
-    NoActiveGroupCall,
-    TelegramServerError,
-)
+from ntgcalls import TelegramServerError
+from pytgcalls.exceptions import AlreadyJoinedError, NoActiveGroupCall
 from pytgcalls.types import (
     JoinedGroupCallParticipant,
     LeftGroupCallParticipant,
@@ -167,7 +164,11 @@ class Call(PyTgCalls):
                     video_parameters=video_stream_quality,
                 )
             else:
-                stream = MediaStream(link, audio_parameters=audio_stream_quality)
+                stream = MediaStream(
+                    link,
+                    audio_parameters=audio_stream_quality,
+                    video_flags=MediaStream.IGNORE,
+                )
         await assistant.change_stream(
             chat_id,
             stream,
@@ -189,6 +190,7 @@ class Call(PyTgCalls):
                 file_path,
                 audio_parameters=audio_stream_quality,
                 ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
+                video_flags=MediaStream.IGNORE,
             )
         )
         await assistant.change_stream(chat_id, stream)
@@ -202,7 +204,10 @@ class Call(PyTgCalls):
                 get = await app.get_chat_member(chat_id, userbot.id)
             except ChatAdminRequired:
                 raise AssistantErr(_["call_1"])
-            if get.status == ChatMemberStatus.BANNED or get.status == ChatMemberStatus.RESTRICTED:
+            if (
+                get.status == ChatMemberStatus.BANNED
+                or get.status == ChatMemberStatus.RESTRICTED
+            ):
                 try:
                     await app.unban_chat_member(chat_id, userbot.id)
                 except:
@@ -284,7 +289,11 @@ class Call(PyTgCalls):
                         video_parameters=video_stream_quality,
                     )
                     if video
-                    else MediaStream(link, audio_parameters=audio_stream_quality)
+                    else MediaStream(
+                        link,
+                        audio_parameters=audio_stream_quality,
+                        video_flags=MediaStream.IGNORE,
+                    )
                 )
         try:
             await assistant.join_group_call(
@@ -388,6 +397,7 @@ class Call(PyTgCalls):
                         stream = MediaStream(
                             link,
                             audio_parameters=audio_stream_quality,
+                            video_flags=MediaStream.IGNORE,
                         )
                 try:
                     await client.change_stream(chat_id, stream)
@@ -447,6 +457,7 @@ class Call(PyTgCalls):
                         stream = MediaStream(
                             file_path,
                             audio_parameters=audio_stream_quality,
+                            video_flags=MediaStream.IGNORE,
                         )
                 try:
                     await client.change_stream(chat_id, stream)
@@ -480,7 +491,11 @@ class Call(PyTgCalls):
                         video_parameters=video_stream_quality,
                     )
                     if str(streamtype) == "video"
-                    else MediaStream(videoid, audio_parameters=audio_stream_quality)
+                    else MediaStream(
+                        videoid,
+                        audio_parameters=audio_stream_quality,
+                        video_flags=MediaStream.IGNORE,
+                    )
                 )
                 try:
                     await client.change_stream(chat_id, stream)
@@ -526,6 +541,7 @@ class Call(PyTgCalls):
                         stream = MediaStream(
                             queued,
                             audio_parameters=audio_stream_quality,
+                            video_flags=MediaStream.IGNORE,
                         )
                 try:
                     await client.change_stream(chat_id, stream)
