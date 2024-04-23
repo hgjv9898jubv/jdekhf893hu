@@ -22,7 +22,6 @@ from AlinaXIQ.utils.inline.play import (
 )
 from AlinaXIQ.utils.inline.playlist import botplaylist_markup
 from AlinaXIQ.utils.logger import play_logs
-from AlinaXIQ.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
 from strings import get_command
 from AlinaXIQ.utils.database import is_served_user, add_served_chat
@@ -91,7 +90,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_name,
+                    user_mention,
                     message.chat.id,
                     streamtype="telegram",
                     forceplay=fplay,
@@ -136,7 +135,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_name,
+                    user_mention,
                     message.chat.id,
                     video=True,
                     streamtype="telegram",
@@ -168,6 +167,32 @@ async def play_commnd(
                     plist_id = url.split("=")[1]
                 img = config.PLAYLIST_IMG_URL
                 cap = _["play_10"]
+            elif "https://youtu.be" in url:
+                videoid = url.split("/")[-1].split("?")[0]
+                details, track_id = await YouTube.track(f"https://www.youtube.com/watch?v={videoid}")
+                streamtype = "youtube"
+                img = details["thumb"]
+                cap = _["play_11"].format(
+                    details["title"],
+                    details["duration_min"],
+                )
+            elif "youtube.com/@" in url:
+            # Check if the URL is a YouTube channel link or user link
+                try:
+                    video_urls = fetch_channel_videos(url)
+                    for video_url in video_urls:
+                        # Add each video URL to the queue for playback
+                        details, track_id = await YouTube.track(video_url)
+                        streamtype = "playlist"
+                        img = details["thumb"]
+                        cap = _["play_10"].format(details["title"], details["duration_min"])
+                        await queue_video_for_playback(video_url, details, track_id, streamtype, img, cap)
+                        
+                    await mystic.edit_text("All videos from the channel have been added to the queue.")
+                except Exception as e:
+                    print(e)  # Handle or log the error appropriately
+                    await mystic.edit_text(_["play_3"])  # Error message for the user
+                
             else:
                 try:
                     details, track_id = await YouTube.track(url)
@@ -179,7 +204,7 @@ async def play_commnd(
                 cap = _["play_11"].format(
                     details["title"],
                     details["duration_min"],
-                )
+                                  )
         elif await Spotify.valid(url):
             spotify = True
             if not config.SPOTIFY_CLIENT_ID and not config.SPOTIFY_CLIENT_SECRET:
@@ -202,7 +227,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spplay"
                 img = config.SPOTIFY_PLAYLIST_IMG_URL
-                cap = _["play_12"].format(message.from_user.first_name)
+                cap = _["play_12"].format(message.from_user.mention)
             elif "album" in url:
                 try:
                     details, plist_id = await Spotify.album(url)
@@ -211,7 +236,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spalbum"
                 img = config.SPOTIFY_ALBUM_IMG_URL
-                cap = _["play_12"].format(message.from_user.first_name)
+                cap = _["play_12"].format(message.from_user.mention)
             elif "artist" in url:
                 try:
                     details, plist_id = await Spotify.artist(url)
@@ -220,7 +245,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spartist"
                 img = config.SPOTIFY_ARTIST_IMG_URL
-                cap = _["play_12"].format(message.from_user.first_name)
+                cap = _["play_12"].format(message.from_user.mention)
             else:
                 return await mystic.edit_text(_["play_17"])
         elif await Apple.valid(url):
@@ -240,7 +265,7 @@ async def play_commnd(
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "playlist"
                 plist_type = "apple"
-                cap = _["play_13"].format(message.from_user.first_name)
+                cap = _["play_13"].format(message.from_user.mention)
                 img = url
             else:
                 return await mystic.edit_text(_["play_16"])
@@ -272,7 +297,7 @@ async def play_commnd(
                     user_id,
                     details,
                     chat_id,
-                    user_name,
+                    user_mention,
                     message.chat.id,
                     streamtype="soundcloud",
                     forceplay=fplay,
@@ -303,7 +328,7 @@ async def play_commnd(
                     message.from_user.id,
                     url,
                     chat_id,
-                    message.from_user.first_name,
+                    message.from_user.mention,
                     message.chat.id,
                     video=video,
                     streamtype="index",
@@ -361,7 +386,7 @@ async def play_commnd(
                 user_id,
                 details,
                 chat_id,
-                user_name,
+                user_mention,
                 message.chat.id,
                 video=video,
                 streamtype=streamtype,
@@ -448,7 +473,7 @@ async def play_music(client, CallbackQuery, _):
         chat_id, channel = await get_channeplayCB(_, cplay, CallbackQuery)
     except:
         return
-    user_name = CallbackQuery.from_user.first_name
+    user_mention = CallbackQuery.from_user.mention
     try:
         await CallbackQuery.message.delete()
         await CallbackQuery.answer()
@@ -489,7 +514,7 @@ async def play_music(client, CallbackQuery, _):
             CallbackQuery.from_user.id,
             details,
             chat_id,
-            user_name,
+            user_mention,
             CallbackQuery.message.chat.id,
             video,
             streamtype="youtube",
@@ -513,7 +538,7 @@ async def anonymous_check(client, CallbackQuery):
         return
 
 
-@app.on_callback_query(filters.regex("AlexaPlaylists") & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("AlinaPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
@@ -535,7 +560,7 @@ async def play_playlists_command(client, CallbackQuery, _):
         chat_id, channel = await get_channeplayCB(_, cplay, CallbackQuery)
     except:
         return
-    user_name = CallbackQuery.from_user.first_name
+    user_mention = CallbackQuery.from_user.mention
     await CallbackQuery.message.delete()
     try:
         await CallbackQuery.answer()
@@ -586,7 +611,7 @@ async def play_playlists_command(client, CallbackQuery, _):
             user_id,
             result,
             chat_id,
-            user_name,
+            user_mention,
             CallbackQuery.message.chat.id,
             video,
             streamtype="playlist",
@@ -662,3 +687,429 @@ async def slider_queries(client, CallbackQuery, _):
         return await CallbackQuery.edit_message_media(
             media=med, reply_markup=InlineKeyboardMarkup(buttons)
         )
+
+#-----------------------------------------------------STREAM----------------------------------------#
+         
+import os
+from random import randint
+from typing import Union
+
+from pyrogram.types import InlineKeyboardMarkup
+
+import config
+from AlinaXIQ import Carbon, YouTube, app
+from AlinaXIQ.core.call import Alina
+from AlinaXIQ.misc import db
+from AlinaXIQ.utils.database import add_active_video_chat, is_active_chat, is_video_allowed,
+from AlinaXIQ.utils.exceptions import AssistantErr
+from AlinaXIQ.utils.inline import aq_markup, queuemarkup, close_markup, stream_markup, stream_markup2, panel_markup_4
+from AlinaXIQ.utils.pastebin import AlinaBin
+from AlinaXIQ.utils.stream.queue import put_queue, put_queue_index
+from AlinaXIQ.utils.thumbnails import gen_thumb
+
+
+async def stream(
+    _,
+    mystic,
+    user_id,
+    result,
+    chat_id,
+    user_mention,
+    original_chat_id,
+    video: Union[bool, str] = None,
+    streamtype: Union[bool, str] = None,
+    spotify: Union[bool, str] = None,
+    forceplay: Union[bool, str] = None,
+):
+    if not result:
+        return
+    if video:
+        if not await is_video_allowed(chat_id):
+            raise AssistantErr(_["play_7"])
+    if forceplay:
+        await Alina.force_stop_stream(chat_id)
+    if streamtype == "playlist":
+        msg = f"{_['playlist_16']}\n\n"
+        count = 0
+        for search in result:
+            if int(count) == config.PLAYLIST_FETCH_LIMIT:
+                continue
+            try:
+                (
+                    title,
+                    duration_min,
+                    duration_sec,
+                    thumbnail,
+                    vidid,
+                ) = await YouTube.details(search, False if spotify else True)
+            except:
+                continue
+            if str(duration_min) == "None":
+                continue
+            if duration_sec > config.DURATION_LIMIT:
+                continue
+            if await is_active_chat(chat_id):
+                await put_queue(
+                    chat_id,
+                    original_chat_id,
+                    f"vid_{vidid}",
+                    title,
+                    duration_min,
+                    user_mention,
+                    vidid,
+                    user_id,
+                    "video" if video else "audio",
+                )
+                position = len(db.get(chat_id)) - 1
+                count += 1
+                msg += f"{count}. {title[:70]}\n"
+                msg += f"{_['playlist_17']} {position}\n\n"
+            else:
+                if not forceplay:
+                    db[chat_id] = []
+                status = True if video else None
+                try:
+                    file_path, direct = await YouTube.download(
+                        vidid, mystic, video=status, videoid=True
+                    )
+                except:
+                    raise AssistantErr(_["play_16"])
+                await Alina.join_call(
+                    chat_id,
+                    original_chat_id,
+                    file_path,
+                    video=status,
+                    image=thumbnail,
+                )
+                await put_queue(
+                    chat_id,
+                    original_chat_id,
+                    file_path if direct else f"vid_{vidid}",
+                    title,
+                    duration_min,
+                    user_mention,
+                    vidid,
+                    user_id,
+                    "video" if video else "audio",
+                    forceplay=forceplay,
+                )
+                img = await gen_thumb(vidid)
+                button = stream_markup(_, vidid, chat_id)
+                run = await app.send_photo(
+                    original_chat_id,
+                    photo=img,
+                    caption=_["stream_1"].format(
+                        f"https://t.me/{app.username}?start=info_{vidid}",
+                        title[:18],
+                        duration_min,
+                        user_mention), reply_markup=InlineKeyboardMarkup(button))
+                
+                    
+                
+                db[chat_id][0]["mystic"] = run
+                db[chat_id][0]["markup"] = "stream"
+        if count == 0:
+            return
+        else:
+            link = await AlinaBin(msg)
+            lines = msg.count("\n")
+            if lines >= 17:
+                car = os.linesep.join(msg.split(os.linesep)[:17])
+            else:
+                car = msg
+            carbon = await Carbon.generate(car, randint(100, 10000000))
+            upl = close_markup(_)
+            return await app.send_photo(
+                original_chat_id,
+                photo=carbon,
+                caption=_["playlist_18"].format(position, link),
+                reply_markup=upl,
+            )
+    elif streamtype == "youtube":
+        link = result["link"]
+        vidid = result["vidid"]
+        title = (result["title"]).title()
+        duration_min = result["duration_min"]
+        thumbnail = result["thumb"]
+        status = True if video else None
+        try:
+            file_path, direct = await YouTube.download(
+                vidid, mystic, videoid=True, video=status
+            )
+        except:
+            raise AssistantErr(_["play_16"])
+        if await is_active_chat(chat_id):
+            await put_queue(
+                chat_id,
+                original_chat_id,
+                file_path if direct else f"vid_{vidid}",
+                title,
+                duration_min,
+                user_mention,
+                vidid,
+                user_id,
+                "video" if video else "audio",
+            )
+            img = await gen_thumb(vidid)
+            position = len(db.get(chat_id)) - 1
+            button = aq_markup(_, chat_id)
+            await app.send_photo(
+                chat_id=original_chat_id,
+                photo=img,
+                caption=_["queue_4"].format(position, title[:18], duration_min, user_mention),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+        else:
+            if not forceplay:
+                db[chat_id] = []
+            await Alina.join_call(
+                chat_id,
+                original_chat_id,
+                file_path,
+                video=status,
+                image=thumbnail,
+            )
+            await put_queue(
+                chat_id,
+                original_chat_id,
+                file_path if direct else f"vid_{vidid}",
+                title,
+                duration_min,
+                user_mention,
+                vidid,
+                user_id,
+                "video" if video else "audio",
+                forceplay=forceplay,
+            )
+            img = await gen_thumb(vidid)
+            button = stream_markup(_, vidid, chat_id)
+            run = await app.send_photo(
+                original_chat_id,
+                photo=img,
+                caption=_["stream_1"].format(
+                    f"https://t.me/{app.username}?start=info_{vidid}",
+                    title[:18],
+                    duration_min,
+                    user_mention), reply_markup=InlineKeyboardMarkup(button))
+                
+            db[chat_id][0]["mystic"] = run
+            db[chat_id][0]["markup"] = "stream"
+    elif streamtype == "soundcloud":
+        file_path = result["filepath"]
+        title = result["title"]
+        duration_min = result["duration_min"]
+        if await is_active_chat(chat_id):
+            await put_queue(
+                chat_id,
+                original_chat_id,
+                file_path,
+                title,
+                duration_min,
+                user_mention,
+                streamtype,
+                user_id,
+                "audio",
+            )
+            position = len(db.get(chat_id)) - 1
+            button = aq_markup(_, chat_id)
+            await app.send_message(
+                chat_id=original_chat_id,
+                text=_["queue_4"].format(position, title[:18], duration_min, user_mention),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+        else:
+            if not forceplay:
+                db[chat_id] = []
+            await Alina.join_call(chat_id, original_chat_id, file_path, video=None)
+            await put_queue(
+                chat_id,
+                original_chat_id,
+                file_path,
+                title,
+                duration_min,
+                user_mention,
+                streamtype,
+                user_id,
+                "audio",
+                forceplay=forceplay,
+            )
+            button = stream_markup2(_, chat_id)
+            run = await app.send_photo(
+                original_chat_id,
+                photo=config.SOUNCLOUD_IMG_URL,
+                caption=_["stream_1"].format(
+                    config.SUPPORT_CHAT, title[:23], duration_min, user_mention
+                ),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+            db[chat_id][0]["mystic"] = run
+            db[chat_id][0]["markup"] = "tg"
+    elif streamtype == "telegram":
+        file_path = result["path"]
+        link = result["link"]
+        title = (result["title"]).title()
+        duration_min = result["dur"]
+        status = True if video else None
+        if await is_active_chat(chat_id):
+            await put_queue(
+                chat_id,
+                original_chat_id,
+                file_path,
+                title,
+                duration_min,
+                user_mention,
+                streamtype,
+                user_id,
+                "video" if video else "audio",
+            )
+            position = len(db.get(chat_id)) - 1
+            button = aq_markup(_, chat_id)
+            await app.send_message(
+                chat_id=original_chat_id,
+                text=_["queue_4"].format(position, title[:18], duration_min, user_mention),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+        else:
+            if not forceplay:
+                db[chat_id] = []
+            await Alina.join_call(chat_id, original_chat_id, file_path, video=status)
+            await put_queue(
+                chat_id,
+                original_chat_id,
+                file_path,
+                title,
+                duration_min,
+                user_mention,
+                streamtype,
+                user_id,
+                "video" if video else "audio",
+                forceplay=forceplay,
+            )
+            if video:
+                await add_active_video_chat(chat_id)
+            button = stream_markup2(_, chat_id)
+            run = await app.send_photo(
+                original_chat_id,
+                photo=config.TELEGRAM_VIDEO_URL if video else config.TELEGRAM_AUDIO_URL,
+                caption=_["stream_1"].format(link, title[:23], duration_min, user_mention),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+            db[chat_id][0]["mystic"] = run
+            db[chat_id][0]["markup"] = "tg"
+    elif streamtype == "live":
+        link = result["link"]
+        vidid = result["vidid"]
+        title = (result["title"]).title()
+        thumbnail = result["thumb"]
+        duration_min = "Live Track"
+        status = True if video else None
+        if await is_active_chat(chat_id):
+            await put_queue(
+                chat_id,
+                original_chat_id,
+                f"live_{vidid}",
+                title,
+                duration_min,
+                user_mention,
+                vidid,
+                user_id,
+                "video" if video else "audio",
+            )
+            position = len(db.get(chat_id)) - 1
+            button = aq_markup(_, chat_id)
+            await app.send_message(
+                chat_id=original_chat_id,
+                text=_["queue_4"].format(position, title[:18], duration_min, user_mention),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+        else:
+            if not forceplay:
+                db[chat_id] = []
+            n, file_path = await YouTube.video(link)
+            if n == 0:
+                raise AssistantErr(_["str_3"])
+            await Alina.join_call(
+                chat_id,
+                original_chat_id,
+                file_path,
+                video=status,
+                image=thumbnail if thumbnail else None,
+            )
+            await put_queue(
+                chat_id,
+                original_chat_id,
+                f"live_{vidid}",
+                title,
+                duration_min,
+                user_mention,
+                vidid,
+                user_id,
+                "video" if video else "audio",
+                forceplay=forceplay,
+            )
+            img = await gen_thumb(vidid)
+            button = stream_markup2(_, chat_id)
+            run = await app.send_photo(
+                original_chat_id,
+                photo=img,
+                caption=_["stream_1"].format(
+                    f"https://t.me/{app.username}?start=info_{vidid}",
+                    title[:23],
+                    duration_min,
+                    user_mention,
+                ),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+            db[chat_id][0]["mystic"] = run
+            db[chat_id][0]["markup"] = "tg"
+    elif streamtype == "index":
+        link = result
+        title = "ɪɴᴅᴇx ᴏʀ ᴍ3ᴜ8 ʟɪɴᴋ"
+        duration_min = "00:00"
+        if await is_active_chat(chat_id):
+            await put_queue_index(
+                chat_id,
+                original_chat_id,
+                "index_url",
+                title,
+                duration_min,
+                user_mention,
+                link,
+                "video" if video else "audio",
+            )
+            position = len(db.get(chat_id)) - 1
+            button = aq_markup(_, chat_id)
+            await mystic.edit_text(
+                text=_["queue_4"].format(position, title[:27], duration_min, user_mention),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+        else:
+            if not forceplay:
+                db[chat_id] = []
+            await Alina.join_call(
+                chat_id,
+                original_chat_id,
+                link,
+                video=True if video else None,
+            )
+            await put_queue_index(
+                chat_id,
+                original_chat_id,
+                "index_url",
+                title,
+                duration_min,
+                user_mention,
+                link,
+                "video" if video else "audio",
+                forceplay=forceplay,
+            )
+            button = stream_markup2(_, chat_id)
+            run = await app.send_photo(
+                original_chat_id,
+                photo=config.STREAM_IMG_URL,
+                caption=_["stream_2"].format(user_mention),
+                reply_markup=InlineKeyboardMarkup(button),
+            )
+            db[chat_id][0]["mystic"] = run
+            db[chat_id][0]["markup"] = "tg"
+            await mystic.delete()
