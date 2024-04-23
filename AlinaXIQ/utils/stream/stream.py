@@ -405,7 +405,7 @@ async def stream(
         else:
             if not forceplay:
                 db[chat_id] = []
-            await Alexa.join_call(
+            await Alina.join_call(
                 chat_id,
                 original_chat_id,
                 link,
