@@ -113,7 +113,7 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                        title[:27],
+                        title[:23],
                         f"https://t.me/{app.username}?start=info_{vidid}",
                         duration_min,
                         user_name,
@@ -172,7 +172,7 @@ async def stream(
                 original_chat_id,
                 photo=qimg,
                 caption=_["queue_4"].format(
-                    position, title[:27], duration_min, user_name
+                    position, title[:20], duration_min, user_name
                 ),
                 reply_markup=InlineKeyboardMarkup(button),
             )
@@ -202,7 +202,7 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                        title[:27],
+                        title[:20],
                         f"https://t.me/{app.username}?start=info_{vidid}",
                         duration_min,
                         user_name,
@@ -232,7 +232,7 @@ async def stream(
             position = len(db.get(chat_id)) - 1
             await app.send_message(
                 original_chat_id,
-                _["queue_4"].format(position, title[:30], duration_min, user_name),
+                _["queue_4"].format(position, title[:27], duration_min, user_name),
             )
         else:
             if not forceplay:
@@ -331,7 +331,7 @@ async def stream(
             position = len(db.get(chat_id)) - 1
             await app.send_message(
                 original_chat_id,
-                _["queue_4"].format(position, title[:30], duration_min, user_name),
+                _["queue_4"].format(position, title[:27], duration_min, user_name),
             )
         else:
             if not forceplay:
@@ -365,7 +365,7 @@ async def stream(
                 original_chat_id,
                 photo=img,
                 caption=_["stream_1"].format(
-                    title[:27],
+                    title[:20],
                     f"https://t.me/{app.username}?start=info_{vidid}",
                     duration_min,
                     user_name,
@@ -391,7 +391,7 @@ async def stream(
             )
             position = len(db.get(chat_id)) - 1
             await mystic.edit_text(
-                _["queue_4"].format(position, title[:30], duration_min, user_name)
+                _["queue_4"].format(position, title[:27], duration_min, user_name)
             )
         else:
             if not forceplay:
