@@ -40,15 +40,12 @@ from AlinaXIQ.utils.database import (
 )
 from AlinaXIQ.utils.decorators.language import languageCB
 from AlinaXIQ.utils.formatters import seconds_to_min
-from AlinaXIQ.utils.inline import close_markup, stream_markup, stream_markup_timer, stream_markup2, stream_markup_timer2, panel_markup_5, track_markup, slider_markup, livestream_markup, playlist_markup, stream_markup, stream_markup_timer, telegram_markup, panel_markup_4, panel_markup_3, panel_markup_2, stream_markup_timer2, stream_markup2, queue_markup, panel_markup_1 
-from AlinaXIQ.utils.stream.autoclear import auto_clean
-from AlinaXIQ.utils.thumbnails import gen_thumb
-from AlinaXIQ.utils.theme import check_theme
+from AlexaMusic.utils.inline.play import panel_markup_1, stream_markup, telegram_markup
+from AlexaMusic.utils.stream.autoclear import auto_clean
+from AlexaMusic.utils.thumbnails import gen_thumb
+from AlexaMusic.utils.theme import check_theme
 
 wrong = {}
-
-
-#=============================FUNCTIONS==============================#
 
 
 @app.on_callback_query(filters.regex("PanelMarkup") & ~BANNED_USERS)
@@ -60,92 +57,42 @@ async def markup_panel(client, CallbackQuery: CallbackQuery, _):
     videoid, chat_id = callback_request.split("|")
     chat_id = CallbackQuery.message.chat.id
     buttons = panel_markup_1(_, videoid, chat_id)
-    
     try:
         await CallbackQuery.edit_message_reply_markup(
             reply_markup=InlineKeyboardMarkup(buttons)
         )
     except:
         return
+    if chat_id not in wrong:
+        wrong[chat_id] = {}
+    wrong[chat_id][CallbackQuery.message.id] = False
 
 
 @app.on_callback_query(filters.regex("MainMarkup") & ~BANNED_USERS)
 @languageCB
-async def del_back_playlists(client, CallbackQuery, _):
-    await CallbackQuery.answer()
-    callback_data = CallbackQuery.data.strip()
-    callback_request = callback_data.split(None, 1)[1]
-    videoid, chat_id = callback_request.split("|")
-    buttons = stream_markup(_, videoid, chat_id)
-    chat_id = CallbackQuery.message.chat.id
-    try:
-        await CallbackQuery.edit_message_reply_markup(
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
-    except:
-        return
-
-@app.on_callback_query(filters.regex("MusicMarkup") & ~BANNED_USERS)
-@languageCB
-async def music_markup(client, CallbackQuery, _):
-    await CallbackQuery.answer()
-    callback_data = CallbackQuery.data.strip()
-    callback_request = callback_data.split(None, 1)[1]
-    videoid, chat_id = callback_request.split("|")
-    buttons = stream_markup(_, videoid, chat_id)
-    chat_id = CallbackQuery.message.chat.id
-    try:
-        await CallbackQuery.edit_message_reply_markup(
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
-    except:
-        return
-
-@app.on_callback_query(filters.regex("Pages") & ~BANNED_USERS)
-@languageCB
 async def del_back_playlist(client, CallbackQuery, _):
     await CallbackQuery.answer()
     callback_data = CallbackQuery.data.strip()
-    chat_id = CallbackQuery.message.chat.id
-    playing = db.get(chat_id)
     callback_request = callback_data.split(None, 1)[1]
-    state, pages, videoid, chat = callback_request.split("|")
-    chat_id = int(chat)
-    pages = int(pages)
-    if state == "Forw":
-        if pages == 0:
-            buttons = panel_markup_5(_, videoid, chat_id)
-        if pages == 1:
-            buttons = panel_markup_1(_, videoid, chat_id)
-        if pages == 2:
-            buttons = panel_markup_2(_, videoid, chat_id) 
-        
-    if state == "Back":
-        if pages == 1:
-            buttons = panel_markup_1(_, videoid, chat_id)
-        if pages == 2:
-            buttons = panel_markup_5(_, videoid, chat_id)
-        if pages == 0:
-            buttons = panel_markup_3(_, videoid, chat_id)
-        if pages == 4:
-            buttons = panel_markup_
-        if pages == 3:
-            buttons = panel_markup_4(_,
-                            playing[0]["vidid"],
-                            chat_id,
-                            seconds_to_min(playing[0]["played"]),
-                            playing[0]["dur"],)
+    videoid, chat_id = callback_request.split("|")
+    if videoid == str(None):
+        buttons = telegram_markup(_, chat_id)
+    else:
+        buttons = stream_markup(_, videoid, chat_id)
+    chat_id = CallbackQuery.message.chat.id
     try:
         await CallbackQuery.edit_message_reply_markup(
             reply_markup=InlineKeyboardMarkup(buttons)
         )
     except:
         return
+    if chat_id not in wrong:
+        wrong[chat_id] = {}
+    wrong[chat_id][CallbackQuery.message.id] = True
 
 
 downvote = {}
 downvoters = {}
-
 
 @app.on_callback_query(filters.regex("ADMIN") & ~BANNED_USERS)
 @languageCB
@@ -280,7 +227,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             except Exception:
                 return await CallbackQuery.message.reply_text(_["call_9"])
             theme = await check_theme(chat_id)
-            button = stream_markup2(_, chat_id)
+            button = telegram_markup(_, chat_id)
             img = await gen_thumb(videoid, user_id, theme)
             run = await CallbackQuery.message.reply_photo(
                 photo=img,
@@ -332,7 +279,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                 await Alina.skip_stream(chat_id, videoid, video=status)
             except Exception:
                 return await CallbackQuery.message.reply_text(_["call_9"])
-            button = stream_markup2(_, chat_id)
+            button = telegram_markup(_, chat_id)
             run = await CallbackQuery.message.reply_photo(
                 photo=STREAM_IMG_URL,
                 caption=_["stream_2"].format(user),
@@ -347,7 +294,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             except Exception:
                 return await CallbackQuery.message.reply_text(_["call_9"])
             if videoid == "telegram":
-                button = stream_markup2(_, chat_id)
+                button = telegram_markup(_, chat_id)
                 run = await CallbackQuery.message.reply_photo(
                     photo=(
                         TELEGRAM_AUDIO_URL
@@ -360,7 +307,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                 db[chat_id][0]["mystic"] = run
                 db[chat_id][0]["markup"] = "tg"
             elif videoid == "soundcloud":
-                button = stream_markup2(_, chat_id)
+                button = telegram_markup(_, chat_id)
                 run = await CallbackQuery.message.reply_photo(
                     photo=(
                         SOUNCLOUD_IMG_URL
