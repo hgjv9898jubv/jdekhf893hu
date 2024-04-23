@@ -3,7 +3,6 @@ bard
 SpeechRecognition
 pornhub-api==0.2.0
 aiohttp
-asyncio
 beautifulsoup4
 daxxhub
 deepai
@@ -31,7 +30,7 @@ future==0.18.3
 search_engine_parser
 py-tgcalls==1.2.2
 pykeyboard
-pyrofork
+pyrogram==2.0.106
 python-dotenv
 PyYAML
 requests
