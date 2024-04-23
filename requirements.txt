@@ -33,6 +33,7 @@ pykeyboard
 pyrogram==2.0.106
 python-dotenv
 PyYAML
+pyshorteners
 requests
 emojis
 speedtest-cli
