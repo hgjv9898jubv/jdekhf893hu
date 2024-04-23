@@ -1,15 +1,3 @@
-# Copyright (C) 2024 by Alexa_Help @ Github, < https://github.com/TheTeamAlexa >
-# Subscribe On YT < Jankari Ki Duniya >. All rights reserved. © Alexa © Yukki.
-
-""""
-TheTeamAlexa is a project of Telegram bots with variety of purposes.
-Copyright (c) 2024 -present Team=Alexa <https://github.com/TheTeamAlexa>
-
-This program is free software: you can redistribute it and can modify
-as you want or you can collabe if you have new ideas.
-"""
-
-
 import config
 from config import PRIVATE_BOT_MODE
 from AlinaXIQ.core.mongo import mongodb
@@ -459,7 +447,9 @@ async def maintenance_on():
 
 # Audio Video Limit
 
-from pytgcalls.types import AudioParameters, AudioQuality, VideoParameters, VideoQuality
+
+from pytgcalls.types import AudioQuality, VideoQuality
+from pytgcalls.types.raw import AudioParameters, VideoParameters
 
 
 async def save_audio_bitrate(chat_id: int, bitrate: str):
