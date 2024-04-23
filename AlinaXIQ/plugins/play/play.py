@@ -703,7 +703,7 @@ from AlinaXIQ.misc import db
 from AlinaXIQ.utils.database import add_active_video_chat, is_active_chat, is_video_allowed
 from AlinaXIQ.utils.exceptions import AssistantErr
 from AlinaXIQ.utils.inline import aq_markup, queuemarkup, close_markup, stream_markup, stream_markup2, panel_markup_4
-from AlinaXIQ.utils.pastebin import AlinaBin
+from AlinaXIQ.utils.pastebin import Alinabin
 from AlinaXIQ.utils.stream.queue import put_queue, put_queue_index
 from AlinaXIQ.utils.thumbnails import gen_thumb
 
@@ -811,7 +811,7 @@ async def stream(
         if count == 0:
             return
         else:
-            link = await AlinaBin(msg)
+            link = await Alinabin(msg)
             lines = msg.count("\n")
             if lines >= 17:
                 car = os.linesep.join(msg.split(os.linesep)[:17])
