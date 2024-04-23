@@ -25,7 +25,7 @@ from AlinaXIQ.utils.logger import play_logs
 from AlinaXIQ.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
 from strings import get_command
-from AlinaXIQ.utils.database import is_served_user
+from AlinaXIQ.utils.database import is_served_user, add_served_chat
 
 # Command
 PLAY_COMMAND = get_command("PLAY_COMMAND")
@@ -44,11 +44,7 @@ async def play_commnd(
     url,
     fplay,
 ):
-    if not await is_served_user(message.from_user.id):
-        await message.reply_text(
-            text="😢 ᴅᴇᴀʀ ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀ ᴠᴇʀɪғɪᴇᴅ ᴀᴛ ᴀʟᴇxᴀ ᴅᴀᴛᴀʙᴀsᴇ.\n☔ ᴘʟᴇᴀsᴇ ᴜsᴇ /verify ᴛᴏ ᴠᴇʀɪғʏ ʏᴏᴜʀsᴇʟғ ᴀᴛ ᴀʟᴇxᴀ ᴅᴀᴛᴀʙᴀsᴇ.",
-        )
-        return
+    await add_served_chat(message.chat.id)
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
@@ -57,7 +53,7 @@ async def play_commnd(
     plist_type = None
     spotify = None
     user_id = message.from_user.id if message.from_user else "1121532100"
-    user_name = message.from_user.first_name if message.from_user else "None"
+    user_name = message.from_user.first_name if message.from_user else "𝖠𝖽𝗆𝗂𝗇"
     audio_telegram = (
         (message.reply_to_message.audio or message.reply_to_message.voice)
         if message.reply_to_message
