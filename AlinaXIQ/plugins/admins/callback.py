@@ -40,10 +40,10 @@ from AlinaXIQ.utils.database import (
 )
 from AlinaXIQ.utils.decorators.language import languageCB
 from AlinaXIQ.utils.formatters import seconds_to_min
-from AlexaMusic.utils.inline.play import panel_markup_1, stream_markup, telegram_markup
-from AlexaMusic.utils.stream.autoclear import auto_clean
-from AlexaMusic.utils.thumbnails import gen_thumb
-from AlexaMusic.utils.theme import check_theme
+from AlinaXIQ.utils.inline.play import panel_markup_1, stream_markup, telegram_markup
+from AlinaXIQ.utils.stream.autoclear import auto_clean
+from AlinaXIQ.utils.thumbnails import gen_thumb
+from AlinaXIQ.utils.theme import check_theme
 
 wrong = {}
 
