@@ -17,23 +17,23 @@ from typing import Union
 from pyrogram.types import InlineKeyboardMarkup
 
 import config
-from AlexaMusic import Carbon, YouTube, app
-from AlexaMusic.core.call import Alina
-from AlexaMusic.misc import db
-from AlexaMusic.utils.database import (
+from AlinaXIQ import Carbon, YouTube, app
+from AlinaXIQ.core.call import Alina
+from AlinaXIQ.misc import db
+from AlinaXIQ.utils.database import (
     add_active_chat,
     add_active_video_chat,
     is_active_chat,
     is_video_allowed,
     music_on,
 )
-from AlexaMusic.utils.exceptions import AssistantErr
-from AlexaMusic.utils.inline.play import stream_markup, queue_markup, telegram_markup
-from AlexaMusic.utils.inline.playlist import close_markup
-from AlexaMusic.utils.pastebin import Alinabin
-from AlexaMusic.utils.stream.queue import put_queue, put_queue_index
-from AlexaMusic.utils.thumbnails import gen_thumb, gen_qthumb
-from AlexaMusic.utils.theme import check_theme
+from AlinaXIQ.utils.exceptions import AssistantErr
+from AlinaXIQ.utils.inline.play import stream_markup, queue_markup, telegram_markup
+from AlinaXIQ.utils.inline.playlist import close_markup
+from AlinaXIQ.utils.pastebin import Alinabin
+from AlinaXIQ.utils.stream.queue import put_queue, put_queue_index
+from AlinaXIQ.utils.thumbnails import gen_thumb, gen_qthumb
+from AlinaXIQ.utils.theme import check_theme
 
 
 async def stream(
