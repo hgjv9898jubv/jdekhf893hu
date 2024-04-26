@@ -413,8 +413,8 @@ class Call(PyTgCalls):
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                        title[:27],
                         f"https://t.me/{app.username}?start=info_{videoid}",
+                        title[:23],
                         check[0]["dur"],
                         user,
                     ),
@@ -474,8 +474,8 @@ class Call(PyTgCalls):
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                        title[:27],
                         f"https://t.me/{app.username}?start=info_{videoid}",
+                        title[:23],
                         check[0]["dur"],
                         user,
                     ),
@@ -582,8 +582,8 @@ class Call(PyTgCalls):
                         original_chat_id,
                         photo=img,
                         caption=_["stream_1"].format(
-                            title[:27],
                             f"https://t.me/{app.username}?start=info_{videoid}",
+                            title[:23],
                             check[0]["dur"],
                             user,
                         ),
