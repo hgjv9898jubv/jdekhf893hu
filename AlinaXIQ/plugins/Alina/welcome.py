@@ -1,5 +1,4 @@
 from AlinaXIQ import app
-from pyrogram import filters
 from pyrogram.errors import RPCError
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from os import environ
@@ -16,15 +15,34 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from asyncio import sleep
 from pyrogram import filters, Client, enums
 from pyrogram.enums import ParseMode
-from pyrogram import *
-from pyrogram.types import *
 from logging import getLogger
 from AlinaXIQ.utils.alina_ban import admin_filter
-import os
 from PIL import ImageDraw, Image, ImageFont, ImageChops
 from pyrogram import *
 from pyrogram.types import *
 from logging import getLogger
+from pyrogram import Client, filters
+import requests
+import random
+import os
+import re
+import asyncio
+import time
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+import asyncio
+from pyrogram import Client, filters
+from pyrogram.errors import UserAlreadyParticipant
+from AlinaXIQ import app
+import asyncio
+import random
+from pyrogram import Client, filters
+from pyrogram.enums import ChatMemberStatus
+from pyrogram.errors import (
+    ChatAdminRequired,
+    InviteRequestSent,
+    UserAlreadyParticipant,
+    UserNotParticipant,
+)
 
 
 random_photo = [
@@ -95,8 +113,7 @@ def welcomepic(pic, user, chatname, id, uname, brightness_factor=1.3):
     background.save(f"downloads/welcome#{id}.png")
     return f"downloads/welcome#{id}.png"
 
-
-@app.on_message(filters.command(["wel", "welcome"]) & ~filters.private)
+@app.on_message(filters.command(["welcome", "wel"]) & ~filters.private)
 async def auto_state(_, message):
     usage = "**بەکارهێنان:**\n⦿/wel [on|off]\n"
     if len(message.command) == 1:
@@ -109,18 +126,18 @@ async def auto_state(_, message):
     ):
         A = await wlcm.find_one(chat_id)
         state = message.text.split(None, 1)[1].strip().lower()
-        if state == "on":
+        if state == "off":
             if A:
-                return await message.reply_text("**بەخێرهاتن پێشتر چالاککراوە**")
-            elif not A:
+                await message.reply_text("**بەخێرهاتن پێشتر لەکارخراوە**")
+            else:
                 await wlcm.add_wlcm(chat_id)
-                await message.reply_text(f"**بەخێرهاتن چالاککرا بۆ {message.chat.title}**")
-        elif state == "off":
-            if not A:
-                return await message.reply_text("**بەخێرهاتن پێشتر لەکارخراوە**")
-            elif A:
-                await wlcm.rm_wlcm(chat_id)
                 await message.reply_text(f"**بەخێرهاتن لەکارخرا لە {message.chat.title}**")
+        elif state == "on":
+            if not A:
+                await message.reply_text("**بەخێرهاتن پێشتر چالاککراوە**")
+            else:
+                await wlcm.rm_wlcm(chat_id)
+                await message.reply_text(f"**بەخێرهاتن چالاککرا لە {message.chat.title}**")
         else:
             await message.reply_text(usage)
     else:
@@ -139,7 +156,7 @@ async def greet_new_member(_, member: ChatMemberUpdated):
     user = member.new_chat_member.user if member.new_chat_member else member.from_user
     
     # Add the modified condition here
-    if member.new_chat_member and not member.old_chat_member:
+    if member.new_chat_member and not member.old_chat_member and member.new_chat_member.status != "kicked":
     
         try:
             pic = await app.download_media(
@@ -156,31 +173,20 @@ async def greet_new_member(_, member: ChatMemberUpdated):
             welcomeimg = welcomepic(
                 pic, user.first_name, member.chat.title, user.id, user.username
             )
-            button_text = "๏ ئەندامی نوێ ๏"
-            add_button_text = "๏ زیادم بکە کەناڵت ๏"
-            deep_link = f"tg://openmessage?user_id={user.id}"
-            add_link = f"https://t.me/{app.username}?startchannel=true"
+            button_text = "๏ زیادم بکە کەناڵت ๏"
+            add_button_text = "نوێکارییەکانی ئەلینا 🍻"
+            deep_link = f"https://t.me/{app.username}?startchannel=true"
+            add_link = f"https://t.me/MGIMT"
             temp.MELCOW[f"welcome-{member.chat.id}"] = await app.send_photo(
                 member.chat.id,
                 photo=welcomeimg,
-                caption=f"""**
-┏━━━━━━━━━━━━━━━♡
-┠ 𝗡𝗮𝗺𝗲  ➪ {user.mention}
-┠ 𝗨𝘀𝗲𝗿 ➪ @{user.username}
-┠ 𝗨𝘀𝗲𝗿 𝗜𝗗 ➪** `{user.id}` **
-┠ 𝗠𝗲𝗺𝗯𝗲𝗿𝘀 ➪ {count}
-┗━━━━━━━━━━━━━━━♡
-╔═════ ▓▓ ࿇ ▓▓ ════╗
-                [💠   𝗪𝗘𝗟𝗖𝗢𝗠𝗘   💠](https://t.me/mgimt)
-╚═════ ▓▓ ࿇ ▓▓ ════╝
-▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰
-{app.mention} 𝗕𝗲𝘀𝘁 𝗕𝗼𝘁 𝗙𝗼𝗿 𝗞𝘂𝗿𝗱
-▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰
-**""",
+                caption=f"""**◗⋮◖ بەخێربێی ئەزیزم {user.mention}\n◗⋮◖ بۆ گرووپ 💎.**""",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton(button_text, url=deep_link)],
                     [InlineKeyboardButton(text=add_button_text, url=add_link)],
                 ])
             )
+            await asyncio.sleep(120)
+            await temp.MELCOW[f"welcome-{member.chat.id}"].delete()
         except Exception as e:
             LOGGER.error(e)
