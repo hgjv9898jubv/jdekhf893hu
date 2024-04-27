@@ -8,24 +8,34 @@ from youtubesearchpython.__future__ import VideosSearch
 import config
 from AlinaXIQ import app
 from AlinaXIQ.misc import _boot_
+from AlinaXIQ.plugins.play.playlist import del_plist_msg
 from AlinaXIQ.plugins.sudo.sudoers import sudoers_list
 from AlinaXIQ.utils.database import get_served_chats, get_served_users, get_sudoers
 from AlinaXIQ.utils import bot_sys_stats
 from AlinaXIQ.utils.database import (
     add_served_chat,
+    is_served_user,
     add_served_user,
     blacklisted_chats,
+    get_assistant,
     get_lang,
-    is_banned_user,
+    get_userss,
     is_on_off,
+    is_served_private_chat,
 )
-from AlinaXIQ.utils.decorators.language import LanguageStart
 from AlinaXIQ.utils.formatters import get_readable_time
-from AlinaXIQ.utils.inline import help_pannel, private_panel, start_panel
+from AlinaXIQ.utils.decorators.language import LanguageStart
+from AlinaXIQ.utils.inline import help_pannel, private_panel, start_pannel
+from AlinaXIQ.utils.command import commandpro
 from config import BANNED_USERS
-from strings import get_string
+from strings import get_command, get_string
 
-
+# Define a dictionary to track the last message timestamp for each user
+user_last_message_time = {}
+user_command_count = {}
+# Define the threshold for command spamming (e.g., 20 commands within 60 seconds)
+SPAM_THRESHOLD = 2
+SPAM_WINDOW_SECONDS = 5
 
 IQ_PICS = [
 "https://graph.org/file/9340f44e4a181b18ac663.jpg",
@@ -58,25 +68,108 @@ IQ_VIDS = [
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
-async def start_pm(client, message: Message, _):
+async def start_comm(client, message: Message, _):
+    user_id = message.from_user.id
+    current_time = time()
+    # Update the last message timestamp for the user
+    last_message_time = user_last_message_time.get(user_id, 0)
+
+    if current_time - last_message_time < SPAM_WINDOW_SECONDS:
+        # If less than the spam window time has passed since the last message
+        user_last_message_time[user_id] = current_time
+        user_command_count[user_id] = user_command_count.get(user_id, 0) + 1
+        if user_command_count[user_id] > SPAM_THRESHOLD:
+            # Block the user if they exceed the threshold
+            hu = await message.reply_text(f"**🧑🏻‍💻┋ {message.from_user.mention} بۆت سپام مەکە بەڕێز\n🧑🏻‍💻┋ پێنج چرکە بوەستە**")
+            await asyncio.sleep(3)
+            await hu.delete()
+            return 
+    else:
+        # If more than the spam window time has passed, reset the command count and update the message timestamp
+        user_command_count[user_id] = 1
+        user_last_message_time[user_id] = current_time
+        
     await add_served_user(message.from_user.id)
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            return await message.reply_photo(
-                random.choice(IQ_PICS),
-                caption=_["help_1"].format(config.SUPPORT_CHAT),
-                reply_markup=keyboard,
+            return await message.reply_text(_["help_1"], reply_markup=keyboard)
+        if name[0:4] == "song":
+            return await message.reply_text(_["song_2"])
+        if name[0:3] == "sta":
+            m = await message.reply_text(
+                "🥱 ɢᴇᴛᴛɪɴɢ ʏᴏᴜʀ ᴩᴇʀsᴏɴᴀʟ sᴛᴀᴛs ғʀᴏᴍ {config.MUSIC_BOT_NAME} sᴇʀᴠᴇʀ."
             )
+            stats = await get_userss(message.from_user.id)
+            tot = len(stats)
+            if not stats:
+                await asyncio.sleep(1)
+                return await m.edit(_["ustats_1"])
+
+            def get_stats():
+                msg = ""
+                limit = 0
+                results = {}
+                for i in stats:
+                    top_list = stats[i]["spot"]
+                    results[str(i)] = top_list
+                    list_arranged = dict(
+                        sorted(
+                            results.items(),
+                            key=lambda item: item[1],
+                            reverse=True,
+                        )
+                    )
+                if not results:
+                    return m.edit(_["ustats_1"])
+                tota = 0
+                videoid = None
+                for vidid, count in list_arranged.items():
+                    tota += count
+                    if limit == 10:
+                        continue
+                    if limit == 0:
+                        videoid = vidid
+                    limit += 1
+                    details = stats.get(vidid)
+                    title = (details["title"][:35]).title()
+                    if vidid == "telegram":
+                        msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ᴍᴇᴅɪᴀ](https://t.me/Shayri_Music_Lovers) ** ᴩʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs**\n\n"
+                    else:
+                        msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid}) ** played {count} times**\n\n"
+                msg = _["ustats_2"].format(tot, tota, limit) + msg
+                return videoid, msg
+
+            try:
+                videoid, msg = await loop.run_in_executor(None, get_stats)
+            except Exception as e:
+                print(e)
+                return
+            thumbnail = await YouTube.thumbnail(videoid, True)
+            await m.delete()
+            await message.reply_photo(photo=thumbnail, caption=msg)
+            return
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
-            if await is_on_off(2):
+            if await is_on_off(config.LOG):
+                sender_id = message.from_user.id
+                sender_name = message.from_user.first_name
                 return await app.send_message(
-                    chat_id=config.LOGGER_ID,
-                    text=f"**🧑🏻‍💻┋ کەسێکی نوێ هاتە ناو بۆت پشکنینی گەشەپێدەران\n\n👤┋ ناوی : {message.from_user.mention}\n👾┋ یوزەری : @{message.from_user.username}\n🆔┋ ئایدی :** `{message.from_user.id}`",
+                    config.LOG_GROUP_ID,
+                    f"**🧑🏻‍💻┋ کەسێکی نوێ هاتە ناو بۆت\n\n👤┋ ناوی : {message.from_user.mention}\n👾┋ یوزەری : @{message.from_user.username}\n🆔┋ ئایدی :** `{message.from_user.id}`",
                 )
             return
+        if name[0:3] == "lyr":
+            query = (str(name)).replace("lyrics_", "", 1)
+            lyrical = config.lyrical
+            lyrics = lyrical.get(query)
+            if lyrics:
+                return await Telegram.send_split_text(message, lyrics)
+            else:
+                return await message.reply_text("ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ʟʏʀɪᴄs.")
+        if name[0:3] == "del":
+            await del_plist_msg(client=client, message=message, _=_)
         if name[0:3] == "inf":
             m = await message.reply_text("🔎")
             query = (str(name)).replace("info_", "", 1)
@@ -91,43 +184,76 @@ async def start_pm(client, message: Message, _):
                 channel = result["channel"]["name"]
                 link = result["link"]
                 published = result["publishedTime"]
-            searched_text = _["start_6"].format(
-                title, duration, views, published, channellink, channel, app.mention
-            )
+            searched_text = f"""
+😲**ᴛʀᴀᴄᴋ ɪɴғᴏʀɴᴀᴛɪᴏɴ**😲
+
+📌**ᴛɪᴛʟᴇ:** {title}
+
+⏳**ᴅᴜʀᴀᴛɪᴏɴ:** {duration} ᴍɪɴᴜᴛᴇs
+👀**ᴠɪᴇᴡs:** `{views}`
+⏰**ᴩᴜʙʟɪsʜᴇᴅ ᴏɴ:** {published}
+🎥**ᴄʜᴀɴɴᴇʟ:** {channel}
+📎**ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ:** [ᴠɪsɪᴛ ᴄʜᴀɴɴᴇʟ]({channellink})
+🔗**ʟɪɴᴋ:** [ᴡᴀᴛᴄʜ ᴏɴ ʏᴏᴜᴛᴜʙᴇ]({link})
+
+💖 sᴇᴀʀᴄʜ ᴩᴏᴡᴇʀᴇᴅ ʙʏ {config.MUSIC_BOT_NAME}"""
             key = InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text=_["S_B_8"], url=link),
-                        InlineKeyboardButton(text=_["S_B_9"], url=config.SUPPORT_CHAT),
+                        InlineKeyboardButton(text= "🎸 𝖵𝗂𝖽𝖾𝗈", callback_data=f"downloadvideo {query}"),
+                        InlineKeyboardButton(text= "🎸 𝖠𝗎𝖽𝗂𝗈", callback_data=f"downloadaudio {query}"),
+                
+                    ],
+                    [
+                        InlineKeyboardButton(text="🎧 sᴇᴇ ᴏɴ ʏᴏᴜᴛᴜʙᴇ 🎧", url=link),
                     ],
                 ]
             )
             await m.delete()
             await app.send_photo(
-                chat_id=message.chat.id,
+                message.chat.id,
                 photo=thumbnail,
                 caption=searched_text,
+                parse_mode=enums.ParseMode.MARKDOWN,
                 reply_markup=key,
             )
-            if await is_on_off(2):
+            if await is_on_off(config.LOG):
+                sender_id = message.from_user.id
+                sender_name = message.from_user.first_name
                 return await app.send_message(
-                    chat_id=config.LOGGER_ID,
-                    text=f"**🧑🏻‍💻┋ کەسێکی نوێ هاتە ناو بۆت زانیاری گۆرانی\n\n👤┋ ناوی : {message.from_user.mention}\n👾┋ یوزەری : @{message.from_user.username}\n🆔┋ ئایدی :** `{message.from_user.id}`",
+                    config.LOG_GROUP_ID,
+                    f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <code>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</code>\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀɴᴀᴍᴇ:** {sender_name}",
                 )
     else:
-        out = private_panel(_)
-        served_chats = len(await get_served_chats())
-        served_users = len(await get_served_users())
-        UP, CPU, RAM, DISK = await bot_sys_stats()
-        await message.reply_photo(
-            random.choice(IQ_PICS),
-            caption=_["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM,served_users,served_chats),
-            reply_markup=InlineKeyboardMarkup(out),
-        )
-        if await is_on_off(2):
+        try:
+            await app.resolve_peer(OWNER_ID[0])
+            OWNER = OWNER_ID[0]
+        except:
+            OWNER = None
+        out = private_panel(_, app.username, OWNER)
+        if config.START_IMG_URL:
+            try:
+                await message.reply_photo(
+                    photo=config.START_IMG_URL,
+                    caption=_["start_2"].format(config.MUSIC_BOT_NAME),
+                    reply_markup=InlineKeyboardMarkup(out),
+                )
+            except:
+                await message.reply_text(
+                    _["start_2"].format(config.MUSIC_BOT_NAME),
+                    reply_markup=InlineKeyboardMarkup(out),
+                )
+        else:
+            await message.reply_text(
+                _["start_2"].format(config.MUSIC_BOT_NAME),
+                reply_markup=InlineKeyboardMarkup(out),
+            )
+        if await is_on_off(config.LOG):
+            sender_id = message.from_user.id
+            sender_name = message.from_user.first_name
             return await app.send_message(
-                chat_id=config.LOGGER_ID,
-                text=f"**🧑🏻‍💻┋ کەسێکی نوێ هاتە ناو بۆت\n\n👤┋ ناوی : {message.from_user.mention}\n👾┋ یوزەری : @{message.from_user.username}\n🆔┋ ئایدی :** `{message.from_user.id}`",
+                config.LOG_GROUP_ID,
+                f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʏᴏᴜʀ ʙᴏᴛ.\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀɴᴀᴍᴇ:** {sender_name}",
             )
 
 
