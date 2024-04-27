@@ -128,20 +128,9 @@ STATS_IMG_URL = getenv(
     "assets/Stats.jpeg",
 )
 
-TELEGRAM_AUDIO_URL = getenv(
-    "TELEGRAM_AUDIO_URL",
-    "assets/Audio.jpeg",
-)
-
-TELEGRAM_VIDEO_URL = getenv(
-    "TELEGRAM_VIDEO_URL",
-    "assets/Video.jpeg",
-)
-
-STREAM_IMG_URL = getenv(
-    "STREAM_IMG_URL",
-    "assets/Stream.jpeg",
-)
+TELEGRAM_AUDIO_URL = "https://graph.org/file/3202937ba2792dfa8722f.jpg"
+TELEGRAM_VIDEO_URL = "https://graph.org/file/3202937ba2792dfa8722f.jpg"
+STREAM_IMG_URL = "https://graph.org/file/5eb96c4141db368f17b84.jpg"
 
 SOUNCLOUD_IMG_URL = getenv(
     "SOUNCLOUD_IMG_URL",
