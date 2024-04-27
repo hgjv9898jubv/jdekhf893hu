@@ -231,10 +231,10 @@ async def start_comm(client, message: Message, _):
         except:
             OWNER = None
         out = private_panel(_, app.username, OWNER)
-        if config.START_IMG_URL:
+        if IQ_PICS:
             try:
                 await message.reply_photo(
-                    photo=config.START_IMG_URL,
+                    photo=IQ_PICS,
                     caption=_["start_2"].format(config.MUSIC_BOT_NAME),
                     reply_markup=InlineKeyboardMarkup(out),
                 )
